@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>전극도자절제술 사전교육 영상 기획안</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#12355b;
+    --navy-2:#1e4f80;
+    --teal:#1a9c9c;
+    --teal-soft:#e6f5f4;
+    --sky:#f3f8fc;
+    --line:#dbe5ee;
+    --ink:#22303d;
+    --muted:#5f7183;
+    --coral:#e8655a;
+    --coral-soft:#fdeeed;
+    --white:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans KR',sans-serif;color:var(--ink);background:#eef3f7;line-height:1.7;word-break:keep-all}
+  .doc{max-width:1040px;margin:40px auto;background:var(--white);box-shadow:0 10px 40px rgba(18,53,91,.08);border-radius:6px;overflow:hidden}
+
+  /* ---------- 문서 헤더 ---------- */
+  .doc-meta{display:flex;justify-content:space-between;align-items:center;padding:14px 48px;background:var(--navy);color:#cfe0f0;font-size:13px;letter-spacing:.02em}
+  .doc-meta b{color:#fff;font-weight:500}
+  .hero{display:grid;grid-template-columns:1.25fr 1fr;gap:24px;padding:48px 48px 40px;background:linear-gradient(135deg,#f6fafd 0%,#e9f4f6 100%);border-bottom:1px solid var(--line)}
+  .badge{display:inline-block;font-size:12px;font-weight:700;color:var(--teal);background:var(--white);border:1px solid #bfe3e1;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+  .hero h1{font-size:34px;line-height:1.35;font-weight:900;color:var(--navy);letter-spacing:-.02em}
+  .hero h1 span{color:var(--teal)}
+  .hero .sub{margin-top:14px;font-size:16px;color:var(--muted)}
+  .hero-info{margin-top:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px;font-size:14px}
+  .hero-info div{border-left:3px solid var(--teal);padding-left:10px}
+  .hero-info dt{color:var(--muted);font-size:12px}
+  .hero-info dd{font-weight:500;color:var(--navy)}
+  .hero-art{position:relative;display:flex;align-items:flex-end;justify-content:center}
+  .bubble{position:absolute;top:6px;left:0;right:110px;background:var(--white);border:1px solid var(--line);border-radius:16px;padding:14px 18px;font-size:14px;color:var(--navy);box-shadow:0 6px 18px rgba(18,53,91,.08)}
+  .bubble:after{content:"";position:absolute;right:-9px;top:42px;width:16px;height:16px;background:var(--white);border-right:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+  .bubble b{color:var(--teal)}
+
+  /* ---------- 섹션 ---------- */
+  section{padding:44px 48px;border-bottom:1px solid var(--line)}
+  .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+  .sec-num{flex:none;width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+  .sec-head h2{font-size:22px;color:var(--navy);font-weight:700;letter-spacing:-.01em}
+  .sec-head small{display:block;font-size:12px;color:var(--teal);font-weight:500;letter-spacing:.08em}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:22px 24px;background:var(--white)}
+  .card h3{font-size:15px;color:var(--navy);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+  .card h3:before{content:"";width:6px;height:16px;background:var(--teal);border-radius:2px}
+  .card p,.card li{font-size:14.5px;color:var(--ink)}
+  .card ul{list-style:none}
+  .card li{padding:5px 0 5px 18px;position:relative}
+  .card li:before{content:"";position:absolute;left:2px;top:14px;width:6px;height:6px;border-radius:50%;background:var(--teal)}
+
+  /* 환자 프로필 */
+  .profile{display:grid;grid-template-columns:150px 1fr;gap:24px;align-items:center;background:var(--sky);border:1px solid var(--line);border-radius:12px;padding:24px}
+  .profile-avatar{width:150px;height:150px;border-radius:50%;background:var(--white);border:1px solid var(--line);display:grid;place-items:center}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
+  .tag{font-size:13px;padding:4px 12px;border-radius:20px;background:var(--white);border:1px solid var(--line);color:var(--navy)}
+  .tag.main{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .profile p{font-size:15px}
+
+  .anxiety{margin-top:20px;background:var(--coral-soft);border:1px solid #f5cfcb;border-radius:12px;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .anxiety h4{font-size:14px;color:var(--coral);margin-bottom:6px}
+  .anxiety p{font-size:14px}
+  .meter{height:10px;border-radius:6px;background:#f4d9d6;overflow:hidden;margin-top:8px}
+  .meter i{display:block;height:100%;width:82%;background:linear-gradient(90deg,#f0a39b,var(--coral));border-radius:6px}
+
+  /* 시술 일러스트 */
+  .illust{display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+  .illust-box{background:linear-gradient(180deg,#0f2b4a,#173f68);border-radius:14px;padding:16px;position:relative}
+  .illust-box .label{position:absolute;top:14px;left:16px;font-size:11px;color:#9cc4e4;letter-spacing:.12em}
+  .steps{counter-reset:s}
+  .step{display:flex;gap:14px;padding:12px 0;border-bottom:1px dashed var(--line)}
+  .step:last-child{border:none}
+  .step:before{counter-increment:s;content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;background:var(--teal-soft);color:var(--teal);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:2px}
+  .step b{display:block;color:var(--navy);font-size:15px}
+  .step span{font-size:13.5px;color:var(--muted)}
+
+  /* 스토리보드 */
+  .story{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .scene{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--white)}
+  .scene .thumb{height:92px;background:var(--sky);display:grid;place-items:center;border-bottom:1px solid var(--line)}
+  .scene .body{padding:12px 14px}
+  .scene .time{font-size:11px;color:var(--teal);font-weight:700}
+  .scene b{display:block;font-size:14px;color:var(--navy);margin:2px 0 4px}
+  .scene p{font-size:12.5px;color:var(--muted);line-height:1.55}
+
+  /* 기대효과 */
+  .effect{display:grid;grid-template-columns:1fr 1.3fr;gap:24px;align-items:stretch}
+  .stat{background:var(--navy);color:#fff;border-radius:14px;padding:28px;display:flex;flex-direction:column;justify-content:center}
+  .stat small{color:#9cc4e4;font-size:13px}
+  .compare{display:flex;align-items:flex-end;gap:18px;margin:18px 0 14px}
+  .bar{flex:1;text-align:center;font-size:12px;color:#cfe0f0}
+  .bar i{display:block;border-radius:6px 6px 0 0;margin-bottom:8px}
+  .bar.before i{height:130px;background:#4d7398}
+  .bar.after i{height:42px;background:var(--teal)}
+  .bar strong{display:block;color:#fff;font-size:18px}
+  .stat p{font-size:13px;color:#cfe0f0;border-top:1px solid rgba(255,255,255,.15);padding-top:12px}
+  .effect-list{display:grid;gap:12px}
+  .effect-item{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .effect-item .ic{flex:none;width:40px;height:40px;border-radius:10px;background:var(--teal-soft);display:grid;place-items:center}
+  .effect-item b{color:var(--navy);font-size:15px}
+  .effect-item p{font-size:13.5px;color:var(--muted)}
+
+  /* 운영 표 */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{border:1px solid var(--line);padding:12px 14px;text-align:left;vertical-align:top}
+  th{background:var(--sky);color:var(--navy);width:150px;font-weight:500}
+
+  .note{font-size:12px;color:var(--muted);margin-top:12px}
+  footer{padding:22px 48px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;background:var(--sky)}
+
+  /* 애니메이션 */
+  @keyframes pulse{0%,100%{opacity:.35;r:4}50%{opacity:1;r:6}}
+  .abl{animation:pulse 1.8s ease-in-out infinite}
+  .abl:nth-of-type(2n){animation-delay:.3s}
+  .abl:nth-of-type(3n){animation-delay:.6s}
+  .abl:nth-of-type(4n){animation-delay:.9s}
+  @keyframes draw{from{stroke-dashoffset:520}to{stroke-dashoffset:0}}
+  .cath{stroke-dasharray:520;animation:draw 3.2s ease-out forwards}
+  @keyframes tip{0%,100%{opacity:.6}50%{opacity:1}}
+  .tip{animation:tip 1.2s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+  .nurse{animation:float 4s ease-in-out infinite}
+
+  @media (max-width:860px){
+    .doc{margin:0;border-radius:0}
+    .hero,.illust,.effect,.grid-2,.anxiety{grid-template-columns:1fr}
+    .story{grid-template-columns:repeat(2,1fr)}
+    section,.hero{padding:32px 20px}
+    .doc-meta,footer{padding:12px 20px;flex-direction:column;gap:4px}
+    .profile{grid-template-columns:1fr;text-align:center}
+    .profile-avatar{margin:0 auto}
+    .tags{justify-content:center}
+    .bubble{right:120px}
+    .hero h1{font-size:26px}
+  }
+  @media print{
+    body{background:#fff}
+    .doc{box-shadow:none;margin:0;max-width:none}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-meta">
+    <div>환자교육 콘텐츠 기획안 &nbsp;|&nbsp; <b>심장내과 병동 · 부정맥 시술센터</b></div>
+    <div>작성일 2026. 10. 06</div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <span class="badge">PATIENT EDUCATION · 3D ANIMATION</span>
+      <h1>“보고 이해하면, 덜 두렵습니다”<br><span>심방세동 전극도자절제술</span><br>시술 전 3D 애니메이션 교육영상</h1>
+      <p class="sub">고령·만성질환 환자의 시술 불안을 낮추고, 반복 설명에 쓰이던 의료진의 시간을 돌려주는 표준화된 사전교육 콘텐츠</p>
+      <dl class="hero-info">
+        <div><dt>교육 대상</dt><dd>전극도자절제술 예정 환자 및 보호자</dd></div>
+        <div><dt>콘텐츠 형태</dt><dd>3D 애니메이션 영상 (약 5분)</dd></div>
+        <div><dt>교육 시점</dt><dd>입원 당일 ~ 시술 전날</dd></div>
+        <div><dt>주관</dt><dd>심장내과 간호팀</dd></div>
+      </dl>
+    </div>
+    <div class="hero-art">
+      <div class="bubble">안녕하세요, 시술 안내를 맡은 간호사예요.<br>시술 과정을 <b>영상으로 함께</b> 살펴볼까요?</div>
+      <!-- 간호사 캐릭터 -->
+      <svg class="nurse" width="230" height="300" viewBox="0 0 230 300" aria-label="간호사 캐릭터">
+        <ellipse cx="128" cy="292" rx="70" ry="7" fill="#12355b" opacity=".08"/>
+        <!-- 몸 -->
+        <path d="M70 290 L76 200 Q80 172 128 166 Q176 172 180 200 L186 290 Z" fill="#2aa7a5"/>
+        <path d="M112 168 L128 196 L144 168" fill="#ffffff"/>
+        <path d="M112 168 L128 196 L144 168" fill="none" stroke="#1d8a88" stroke-width="2"/>
+        <rect x="147" y="210" width="20" height="4" rx="2" fill="#1d8a88"/>
+        <!-- 목 -->
+        <rect x="118" y="148" width="20" height="22" rx="8" fill="#f6d2b8"/>
+        <!-- 머리 -->
+        <circle cx="128" cy="112" r="44" fill="#f9dcc6"/>
+        <path d="M84 112 Q82 64 128 62 Q176 62 172 112 Q168 86 140 82 Q110 80 92 98 Z" fill="#3a2a25"/>
+        <circle cx="128" cy="62" r="15" fill="#3a2a25"/>
+        <!-- 캡 -->
+        <path d="M100 76 Q128 58 156 76 L152 86 Q128 74 104 86 Z" fill="#ffffff" stroke="#d9e6ee"/>
+        <rect x="124" y="70" width="8" height="2.6" fill="#e8655a"/><rect x="126.7" y="67.3" width="2.6" height="8" fill="#e8655a"/>
+        <!-- 얼굴 -->
+        <ellipse cx="112" cy="116" rx="3.6" ry="4.4" fill="#3a2a25"/>
+        <ellipse cx="144" cy="116" rx="3.6" ry="4.4" fill="#3a2a25"/>
+        <path d="M117 133 Q128 141 139 133" fill="none" stroke="#b5654f" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="102" cy="128" r="6" fill="#f3a99a" opacity=".45"/>
+        <circle cx="154" cy="128" r="6" fill="#f3a99a" opacity=".45"/>
+        <!-- 팔 + 태블릿 -->
+        <path d="M80 206 Q60 238 92 252" fill="none" stroke="#2aa7a5" stroke-width="18" stroke-linecap="round"/>
+        <rect x="86" y="222" width="62" height="46" rx="6" fill="#12355b"/>
+        <rect x="91" y="227" width="52" height="36" rx="3" fill="#e6f5f4"/>
+        <path d="M110 236 L110 254 L126 245 Z" fill="#1a9c9c"/>
+        <circle cx="96" cy="254" r="8" fill="#f9dcc6"/>
+        <!-- 오른팔 (손짓) -->
+        <path d="M176 204 Q200 196 204 168" fill="none" stroke="#2aa7a5" stroke-width="18" stroke-linecap="round"/>
+        <circle cx="204" cy="162" r="9" fill="#f9dcc6"/>
+        <!-- 청진기 -->
+        <path d="M112 172 Q104 206 122 214" fill="none" stroke="#12355b" stroke-width="2.5"/>
+        <circle cx="124" cy="216" r="5" fill="#12355b"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ===== 1. 기획 배경 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">01</div><div><small>BACKGROUND</small><h2>기획 배경 · 교육 대상자</h2></div></div>
+
+    <div class="profile">
+      <div class="profile-avatar">
+        <svg width="110" height="110" viewBox="0 0 110 110" aria-label="70대 남성 환자">
+          <circle cx="55" cy="44" r="24" fill="#f4d3bd"/>
+          <path d="M31 40 Q34 18 55 18 Q76 18 79 40 Q72 28 55 28 Q38 28 31 40Z" fill="#c9ccd1"/>
+          <circle cx="46" cy="46" r="2.4" fill="#3a2a25"/><circle cx="64" cy="46" r="2.4" fill="#3a2a25"/>
+          <path d="M48 58 Q55 55 62 58" fill="none" stroke="#9c5b4a" stroke-width="2" stroke-linecap="round"/>
+          <path d="M42 39 L50 40 M60 40 L68 39" stroke="#9aa0a6" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 108 Q20 76 55 74 Q90 76 92 108Z" fill="#8fb3d6"/>
+          <path d="M45 75 L55 88 L65 75" fill="#dfeaf4"/>
+        </svg>
+      </div>
+      <div>
+        <b style="font-size:18px;color:var(--navy)">대표 환자 사례 · 70대 남성</b>
+        <div class="tags">
+          <span class="tag main">심방세동 (AF)</span>
+          <span class="tag">고혈압</span><span class="tag">고지혈증</span><span class="tag">당뇨병</span>
+        </div>
+        <p>고혈압·고지혈증·당뇨병을 기저질환으로 가진 70대 남성으로, 심방세동 치료를 위해 <b>전극도자절제술(Catheter Ablation)</b>을 받을 예정이다. 다수의 만성질환과 고령으로 인해 시술에 대한 정보 이해와 수용에 시간이 필요한 대상이다.</p>
+      </div>
+    </div>
+
+    <div class="anxiety">
+      <div>
+        <h4>문제 인식 ① 높은 시술 불안</h4>
+        <p>시술 과정이 눈에 보이지 않아 생기는 <b>불확실성</b>, 출혈·심장 손상 등 <b>부작용에 대한 두려움</b>으로 불안도가 높은 상태이다.</p>
+        <div class="meter"><i></i></div>
+      </div>
+      <div>
+        <h4>문제 인식 ② 반복되는 구두 설명</h4>
+        <p>환자·보호자마다 같은 내용을 1:1로 반복 설명해야 하며, 설명의 깊이와 표현이 의료진에 따라 달라 <b>교육의 표준화</b>가 어렵다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2. 시술 이해 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">02</div><div><small>PROCEDURE</small><h2>영상으로 보여줄 시술 과정</h2></div></div>
+    <div class="illust">
+      <div class="illust-box">
+        <span class="label">3D ANIMATION PREVIEW</span>
+        <svg viewBox="0 0 420 340" width="100%" aria-label="전극도자절제술 모식도">
+          <defs>
+            <radialGradient id="hg" cx="45%" cy="40%" r="65%">
+              <stop offset="0" stop-color="#ff9a8f"/><stop offset="1" stop-color="#c8463f"/>
+            </radialGradient>
+            <radialGradient id="la" cx="50%" cy="50%" r="60%">
+              <stop offset="0" stop-color="#ffd2cc"/><stop offset="1" stop-color="#f08c82"/>
+            </radialGradient>
+          </defs>
+          <!-- 대혈관 -->
+          <path d="M170 70 Q168 30 200 26 Q232 24 236 56" fill="none" stroke="#d65b52" stroke-width="22" stroke-linecap="round"/>
+          <path d="M150 74 L150 24" stroke="#6f8fc9" stroke-width="18" stroke-linecap="round"/>
+          <!-- 심장 -->
+          <path d="M210 76 C150 50 92 80 96 150 C100 216 160 266 214 300 C266 262 330 214 330 146 C330 84 270 56 210 76Z" fill="url(#hg)"/>
+          <path d="M214 300 C200 240 196 180 214 112" fill="none" stroke="#a63a34" stroke-width="2" opacity=".5"/>
+          <!-- 우심방 -->
+          <ellipse cx="150" cy="128" rx="38" ry="34" fill="#e7776d" opacity=".75"/>
+          <text x="128" y="132" fill="#fff" font-size="11" font-family="Noto Sans KR">우심방</text>
+          <!-- 좌심방 -->
+          <ellipse cx="258" cy="118" rx="50" ry="36" fill="url(#la)"/>
+          <text x="244" y="122" fill="#8a2c26" font-size="11" font-weight="700" font-family="Noto Sans KR">좌심방</text>
+          <!-- 폐정맥 -->
+          <g stroke="#e9a29a" stroke-width="10" stroke-linecap="round">
+            <line x1="296" y1="96" x2="340" y2="78"/><line x1="300" y1="130" x2="344" y2="142"/>
+            <line x1="224" y1="94" x2="232" y2="86"/>
+          </g>
+          <!-- 절제 포인트 (폐정맥 주위 원형) -->
+          <g fill="#ffe66b">
+            <circle class="abl" cx="290" cy="94" r="5"/><circle class="abl" cx="300" cy="106" r="5"/>
+            <circle class="abl" cx="304" cy="120" r="5"/><circle class="abl" cx="298" cy="134" r="5"/>
+            <circle class="abl" cx="284" cy="140" r="5"/><circle class="abl" cx="280" cy="98" r="5"/>
+          </g>
+          <!-- 하대정맥 + 카테터 경로 -->
+          <path d="M150 330 L150 160" stroke="#6f8fc9" stroke-width="18" stroke-linecap="round" opacity=".9"/>
+          <path class="cath" d="M150 340 L150 150 Q150 122 186 118 Q230 112 278 116" fill="none" stroke="#f4f7fa" stroke-width="3.5" stroke-linecap="round"/>
+          <circle class="tip" cx="282" cy="116" r="6" fill="#fff" stroke="#1a9c9c" stroke-width="3"/>
+          <!-- 범례 -->
+          <g font-family="Noto Sans KR" font-size="11" fill="#cfe0f0">
+            <line x1="18" y1="300" x2="40" y2="300" stroke="#f4f7fa" stroke-width="3.5"/><text x="46" y="304">카테터 (대퇴정맥 → 심장)</text>
+            <circle cx="29" cy="320" r="5" fill="#ffe66b"/><text x="46" y="324">고주파 에너지 절제 부위 (폐정맥 주변)</text>
+          </g>
+        </svg>
+      </div>
+      <div class="steps">
+        <div class="step"><div><b>준비 · 마취</b><span>시술실 입실 후 진정(수면) 또는 국소마취를 시행합니다.</span></div></div>
+        <div class="step"><div><b>카테터 삽입</b><span>사타구니 대퇴정맥을 통해 가는 관(카테터)을 심장까지 넣습니다. 피부 절개는 거의 없습니다.</span></div></div>
+        <div class="step"><div><b>좌심방 진입</b><span>심방중격을 지나 부정맥이 주로 시작되는 좌심방에 도달합니다.</span></div></div>
+        <div class="step"><div><b>폐정맥 절제(격리)</b><span>폐정맥 입구 주변에 고주파 에너지를 전달해 비정상 전기신호의 통로를 차단합니다.</span></div></div>
+        <div class="step"><div><b>회복 · 관찰</b><span>카테터 제거 후 지혈하고, 일정 시간 침상안정하며 상태를 관찰합니다.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 3. 스토리보드 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">03</div><div><small>STORYBOARD</small><h2>영상 구성안 (총 약 5분)</h2></div></div>
+    <div class="story">
+      <div class="scene">
+        <div class="thumb"><svg width="70" height="60" viewBox="0 0 70 60"><path d="M35 54 C10 38 4 24 12 14 C20 4 32 8 35 18 C38 8 50 4 58 14 C66 24 60 38 35 54Z" fill="#e8655a"/><path d="M8 30 L20 30 L25 20 L30 40 L36 26 L40 32 L62 32" fill="none" stroke="#fff" stroke-width="2.5"/></svg></div>
+        <div class="body"><span class="time">SCENE 1 · 0:00–0:50</span><b>심방세동이란?</b><p>불규칙한 심장 리듬과 뇌졸중 위험을 쉬운 비유로 설명</p></div>
+      </div>
+      <div class="scene">
+        <div class="thumb"><svg width="70" height="60" viewBox="0 0 70 60"><rect x="16" y="8" width="38" height="46" rx="4" fill="#fff" stroke="#1e4f80" stroke-width="2"/><rect x="26" y="4" width="18" height="8" rx="2" fill="#1a9c9c"/><path d="M23 24 l4 4 l8 -8 M23 38 l4 4 l8 -8" fill="none" stroke="#1a9c9c" stroke-width="2.5"/><line x1="40" y1="25" x2="48" y2="25" stroke="#c4d2de" stroke-width="2.5"/><line x1="40" y1="39" x2="48" y2="39" stroke="#c4d2de" stroke-width="2.5"/></svg></div>
+        <div class="body"><span class="time">SCENE 2 · 0:50–1:40</span><b>시술 전 준비</b><p>금식, 복용약(항응고제·당뇨약) 조절, 검사 안내</p></div>
+      </div>
+      <div class="scene">
+        <div class="thumb"><svg width="70" height="60" viewBox="0 0 70 60"><path d="M35 54 C10 38 4 24 12 14 C20 4 32 8 35 18 C38 8 50 4 58 14 C66 24 60 38 35 54Z" fill="#f2a59c"/><path d="M20 60 L20 30 Q20 22 32 22 L46 22" fill="none" stroke="#12355b" stroke-width="2.5"/><circle cx="48" cy="22" r="4" fill="#ffe66b" stroke="#12355b" stroke-width="1.5"/></svg></div>
+        <div class="body"><span class="time">SCENE 3 · 1:40–3:10</span><b>시술 과정 (3D)</b><p>카테터 이동과 절제 과정을 3D로 시각화</p></div>
+      </div>
+      <div class="scene">
+        <div class="thumb"><svg width="70" height="60" viewBox="0 0 70 60"><rect x="8" y="30" width="54" height="12" rx="4" fill="#8fb3d6"/><rect x="8" y="42" width="4" height="12" fill="#1e4f80"/><rect x="58" y="42" width="4" height="12" fill="#1e4f80"/><circle cx="18" cy="26" r="7" fill="#f4d3bd"/><rect x="30" y="24" width="30" height="8" rx="3" fill="#fff"/></svg></div>
+        <div class="body"><span class="time">SCENE 4 · 3:10–4:10</span><b>시술 후 회복</b><p>침상안정, 지혈 부위 관찰, 퇴원 후 생활 관리</p></div>
+      </div>
+      <div class="scene">
+        <div class="thumb"><svg width="70" height="60" viewBox="0 0 70 60"><path d="M10 12 h50 a4 4 0 0 1 4 4 v24 a4 4 0 0 1 -4 4 h-30 l-10 8 v-8 h-10 a4 4 0 0 1 -4 -4 v-24 a4 4 0 0 1 4 -4z" fill="#e6f5f4" stroke="#1a9c9c" stroke-width="2"/><text x="35" y="35" text-anchor="middle" font-size="18" font-weight="700" fill="#1a9c9c">Q&amp;A</text></svg></div>
+        <div class="body"><span class="time">SCENE 5 · 4:10–5:00</span><b>궁금한 점 · 주의 증상</b><p>가능한 합병증과 즉시 알려야 할 증상을 차분히 안내</p></div>
+      </div>
+    </div>
+    <p class="note">※ 전 장면에 간호사 캐릭터가 내레이터로 등장하여 친근한 어조로 설명하며, 고령 환자를 고려해 큰 자막·느린 말속도·쉬운 용어를 적용합니다.</p>
+  </section>
+
+  <!-- ===== 4. 기대효과 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">04</div><div><small>EXPECTED OUTCOMES</small><h2>기대 효과</h2></div></div>
+    <div class="effect">
+      <div class="stat">
+        <small>환자 1인당 사전 설명 소요 시간</small>
+        <div class="compare">
+          <div class="bar before"><i></i><strong>15분+</strong>기존 1:1 구두 상담</div>
+          <div class="bar after"><i></i><strong>대폭 단축</strong>영상 시청 후 질의응답</div>
+        </div>
+        <p>선행 연구에 따르면, 영상 기반 사전교육 도입 후 1:1 구두 상담 시 환자 1인당 최소 15분 이상 소요되던 설명 시간이 크게 줄고 업무 효율이 향상되었다.</p>
+      </div>
+      <div class="effect-list">
+        <div class="effect-item">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a9c9c" stroke-width="2"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></div>
+          <div><b>환자 불안 감소</b><p>보이지 않던 시술 과정을 눈으로 확인해 불확실성과 막연한 두려움을 낮춥니다.</p></div>
+        </div>
+        <div class="effect-item">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a9c9c" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <div><b>의료진 반복 설명 시간 절감</b><p>공통 설명은 영상이 대신하고, 의료진은 개별 질문과 고위험 환자 관리에 집중합니다.</p></div>
+        </div>
+        <div class="effect-item">
+          <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a9c9c" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/></svg></div>
+          <div><b>교육의 표준화 · 운영 효율화</b><p>누가 설명하든 동일한 품질의 정보를 제공하고, 보호자도 언제든 반복 시청할 수 있습니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 5. 운영 계획 ===== -->
+  <section>
+    <div class="sec-head"><div class="sec-num">05</div><div><small>OPERATION PLAN</small><h2>운영 및 평가 계획</h2></div></div>
+    <table>
+      <tr><th>시청 방법</th><td>입원 시 병동 태블릿으로 시청 + QR코드 제공으로 보호자 가정 내 반복 시청</td></tr>
+      <tr><th>교육 흐름</th><td>영상 시청 → 간호사 확인 질문(이해도 체크) → 개별 질의응답 → 교육 기록</td></tr>
+      <tr><th>평가 지표</th><td>시청 전·후 불안 척도 비교, 시술 관련 지식 점수, 1인당 설명 소요 시간, 환자 만족도</td></tr>
+      <tr><th>제작 협업</th><td>심장내과 전문의 내용 감수 · 간호팀 시나리오 작성 · 의료영상 제작업체 3D 애니메이션 제작</td></tr>
+    </table>
+    <p class="note">※ 인용 연구의 서지 정보(저자, 연도, 학술지)는 최종본 작성 시 참고문헌으로 기재합니다.</p>
+  </section>
+
+  <footer>
+    <span>전극도자절제술 사전교육 영상 기획안</span>
+    <span>심장내과 간호팀</span>
+  </footer>
+</div>
+</body>
+</html>
