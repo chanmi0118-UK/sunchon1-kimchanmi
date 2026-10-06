@@ -126,6 +126,7 @@
   <input id="seek" type="range" min="0" max="100" step="0.1" value="0">
   <button id="next">다음 장면 ▶</button>
   <button id="mute">소리 끄기</button>
+  <button id="sfx">효과음 끄기</button>
 </div>
 
 <script>/**
@@ -176,51 +177,135 @@ const canvas=document.getElementById('gl');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,preserveDrawingBuffer:true});
 renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
 renderer.outputEncoding=THREE.sRGBEncoding;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=0.95;
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(35,16/9,0.1,100);
-scene.add(new THREE.HemisphereLight(0xcfe8ff,0x2a1a22,0.75));
-const key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(3,5,6);scene.add(key);
-const rim=new THREE.DirectionalLight(0x7fe0d8,0.8);rim.position.set(-5,2,-4);scene.add(rim);
+// 조명: 따뜻한 수술등 키라이트 + 붉은 반사광 + 청록 림라이트
+scene.add(new THREE.HemisphereLight(0xdcecff,0x3a1a1c,0.55));
+const key=new THREE.DirectionalLight(0xfff1e6,1.4);key.position.set(3,5,6);scene.add(key);
+const fill=new THREE.DirectionalLight(0xffb8a8,0.35);fill.position.set(-6,-2,5);scene.add(fill);
+const rim=new THREE.DirectionalLight(0x7fe0d8,0.9);rim.position.set(-5,2,-4);scene.add(rim);
+{ // 젖은 표면 반사용 환경맵 (외부 파일 없이 생성)
+  const es=new THREE.Scene(),sg=new THREE.SphereGeometry(10,32,16),sp=sg.attributes.position,cols=[];
+  const top=new THREE.Color(0x9fc4e6),bot=new THREE.Color(0x140a10),c=new THREE.Color();
+  for(let i=0;i<sp.count;i++){c.copy(bot).lerp(top,clamp(sp.getY(i)/20+0.5));cols.push(c.r,c.g,c.b);}
+  sg.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
+  es.add(new THREE.Mesh(sg,new THREE.MeshBasicMaterial({side:THREE.BackSide,vertexColors:true})));
+  [[2,8,5,7,1.6],[-8,3,3,4,0.9],[7,1,-6,4,0.7]].forEach(([x,y,z,s,b])=>{const pl=new THREE.Mesh(new THREE.PlaneGeometry(s,s),new THREE.MeshBasicMaterial({color:new THREE.Color(b,b,b),side:THREE.DoubleSide}));pl.position.set(x,y,z);pl.lookAt(0,0,0);es.add(pl);});
+  const pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(es,0.03).texture;pm.dispose();
+}
 
 const heart=new THREE.Group();scene.add(heart);
 const V=(x,y,z)=>new THREE.Vector3(x,y,z);
-const muscleMats=[];
+const muscleMats=[],surfMats=[]; // surfMats: 투시 장면에서 더 흐려지는 표면 구조(지방·관상혈관)
+// 조직 질감 텍스처: 근섬유 결 · 색 얼룩 · 미세혈관 (밝기만 담아 재질 색과 곱해짐, 범프맵 겸용)
+function tissueTex(seed,ang,W=1024,H=512){
+  const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),R=k=>rand(seed+k);
+  const both=(x,f)=>{f(x);if(x>W*0.8)f(x-W);if(x<W*0.2)f(x+W);}; // 좌우 이음매 없이
+  g.fillStyle='#d9d9d9';g.fillRect(0,0,W,H);
+  for(let i=0;i<260;i++){const r=(20+R(i*7.3)*90)*W/1024,l=R(i*1.7),y=R(i*3.1)*H;
+    both(R(i)*W,x=>{const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,l<.5?`rgba(140,140,140,${.1+l*.2})`:`rgba(255,255,255,${.05+(l-.5)*.15})`);gr.addColorStop(1,'rgba(128,128,128,0)');g.fillStyle=gr;g.fillRect(x-r,y-r,r*2,r*2);});}
+  g.lineCap='round';
+  for(let i=0;i<2800;i++){const y=R(i*5.9)*H,len=(30+R(i*1.1)*90)*W/1024,a=ang+(R(i*4.4)-.5)*.35,sh=R(i*8.8),w=.8+R(i*3.3)*2.2;
+    both(R(i*2.3)*W,x=>{g.strokeStyle=sh<.5?`rgba(110,110,110,${.08+sh*.14})`:`rgba(255,255,255,${.06+(sh-.5)*.14})`;g.lineWidth=w;
+      g.beginPath();g.moveTo(x,y);g.quadraticCurveTo(x+Math.cos(a)*len*.5+6,y+Math.sin(a)*len*.5,x+Math.cos(a)*len,y+Math.sin(a)*len);g.stroke();});}
+  for(let i=0;i<70;i++){let x=R(i*9.1)*W,y=R(i*6.2)*H;g.strokeStyle=`rgba(120,105,110,${.05+R(i*2.2)*.07})`;g.lineWidth=.6+R(i*5.5)*.8;g.beginPath();g.moveTo(x,y);
+    for(let k=0;k<7;k++){x+=(R(i*13+k)-.5)*44;y+=(R(i*17+k)-.35)*30;g.lineTo(x,y);}g.stroke();}
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.anisotropy=8;return t;
+}
+const muscleTex=tissueTex(11,-0.75),atrTex=tissueTex(37,0.25,512,256),vesTex=tissueTex(71,0,512,256);
+// 심외막: 촉촉한 광택(clearcoat) + 벨벳 같은 산란(sheen)
 function mat(color,opts={}){
-  const m=new THREE.MeshStandardMaterial(Object.assign({color,roughness:.45,metalness:.05,transparent:true},opts));
-  muscleMats.push(m);return m;
+  const m=new THREE.MeshPhysicalMaterial(Object.assign({color,roughness:.55,metalness:0,clearcoat:.5,clearcoatRoughness:.18,
+    sheen:.25,sheenRoughness:.5,sheenColor:0xd06050,envMapIntensity:.4,transparent:true},opts));
+  m.color.convertSRGBToLinear();m.sheenColor.convertSRGBToLinear();muscleMats.push(m);return m;
 }
-// 심실 (물방울 형태)
-const vg=new THREE.SphereGeometry(1,64,48);
-const p=vg.attributes.position;
-for(let i=0;i<p.count;i++){
-  let x=p.getX(i),y=p.getY(i),z=p.getZ(i);
-  const k=y<0?1+y*0.55:1-y*0.12;
-  p.setXYZ(i,x*1.25*k,y*1.55,z*1.05*k);
+const nz=(x,y,z)=>Math.sin(x*3.1+y*1.7)*Math.sin(y*2.3-z*2.9)*.5+Math.sin(z*4.7+x*2.1)*Math.sin(x*5.3-y*3.9)*.3+Math.sin(x*9.1+y*7.3+z*8.2)*.2;
+function shape(geo,f){ // 정점 변형 + 구 이음매 법선 평균
+  const q=geo.attributes.position,v=new THREE.Vector3();
+  for(let i=0;i<q.count;i++){v.fromBufferAttribute(q,i);f(v);q.setXYZ(i,v.x,v.y,v.z);}
+  geo.computeVertexNormals();
+  const n=geo.attributes.normal,m=new Map(),a=new THREE.Vector3(),b=new THREE.Vector3();
+  for(let i=0;i<q.count;i++){const k=q.getX(i).toFixed(4)+','+q.getY(i).toFixed(4)+','+q.getZ(i).toFixed(4);(m.get(k)||m.set(k,[]).get(k)).push(i);}
+  m.forEach(ids=>{if(ids.length<2)return;a.set(0,0,0);ids.forEach(i=>a.add(b.fromBufferAttribute(n,i)));a.normalize();ids.forEach(i=>n.setXYZ(i,a.x,a.y,a.z));});
+  return geo;
 }
-vg.computeVertexNormals();
-const ventricle=new THREE.Mesh(vg,mat(0xc9483f));
+function tube(pts,r,m,seg=64){ // 끝을 둥글게 막은 혈관
+  const c=new THREE.CatmullRomCurve3(pts),me=new THREE.Mesh(new THREE.TubeGeometry(c,seg,r,20,false),m);
+  [pts[0],pts.at(-1)].forEach(pt=>{const cap=new THREE.Mesh(new THREE.SphereGeometry(r,20,12),m);cap.position.copy(pt);me.add(cap);});
+  return me;
+}
+// 심실: 심실사이고랑·방실고랑·좌심실 볼록함·불규칙한 근육 표면
+const antAz=y=>-0.28+0.5*clamp((0.7-y)/1.65), postAz=Math.PI-0.2;
+const wrapA=a=>Math.atan2(Math.sin(a),Math.cos(a));
+function vR(x,y,z){
+  const az=Math.atan2(x,z),top=y<0.78?1:0;
+  const g=Math.exp(-(wrapA(az-antAz(y))**2)/0.016)*top*(y>-0.92?1:0.2)+0.8*Math.exp(-(wrapA(az-postAz)**2)/0.02)*top;
+  const av=Math.exp(-(((y-0.8)/0.06)**2));
+  const lv=0.045*(0.5+0.5*Math.sin(az+0.3))*Math.exp(-(((y+0.15)/0.85)**2));
+  return 1-0.055*g-0.05*av+lv+0.016*nz(x*1.4,y*1.4,z*1.4);
+}
+const vSurf=(x,y,z)=>{const k=y<0?1+y*0.55:1-y*0.12,r=vR(x,y,z);return V(x*1.25*k*r,y*1.55*r,z*1.05*k*r);};
+const vPt=(az,y,lift=1)=>{const s=Math.sqrt(Math.max(0,1-y*y));return vSurf(s*Math.sin(az),y,s*Math.cos(az)).multiplyScalar(lift);};
+const ventricle=new THREE.Mesh(shape(new THREE.SphereGeometry(1,128,96),v=>{v.normalize();v.copy(vSurf(v.x,v.y,v.z));}),
+  mat(0x8f2f28,{map:muscleTex,bumpMap:muscleTex,bumpScale:.04}));
 ventricle.rotation.z=0.42;ventricle.position.set(0.05,-0.55,0);
 const vGroup=new THREE.Group();vGroup.add(ventricle);heart.add(vGroup);
-// 관상동맥 장식
-const corMat=mat(0xe8b04a,{roughness:.6});
-function tube(pts,r,m,seg=64){const c=new THREE.CatmullRomCurve3(pts);const me=new THREE.Mesh(new THREE.TubeGeometry(c,seg,r,14,false),m);return me;}
-vGroup.add(tube([V(-0.15,0.55,0.95),V(-0.05,0,1.12),V(0.25,-0.8,1.0),V(0.45,-1.6,0.55)],0.035,corMat));
-vGroup.add(tube([V(0.55,0.4,0.85),V(0.95,-0.1,0.75),V(1.1,-0.7,0.35)],0.03,corMat));
-// 심방
+// 관상동맥·심장정맥 (표면 고랑을 따라감) + 주변 심외막 지방
+{
+  const L=1.006,yAV=0.76;
+  const along=(f,y0,y1,n=16)=>{const a=[];for(let i=0;i<=n;i++){const y=lerp(y0,y1,i/n);a.push(vPt(f(y),y,L));}return a;};
+  const ring=(y,a0,a1,n=20)=>{const a=[];for(let i=0;i<=n;i++)a.push(vPt(lerp(a0,a1,i/n),y,L));return a;};
+  const vOpt={map:vesTex,bumpMap:vesTex,bumpScale:.01,roughness:.32,clearcoat:.9};
+  const cor=mat(0xb32a22,vOpt),cvn=mat(0x4a3b6e,vOpt);surfMats.push(cor,cvn);
+  const fat=[];
+  const addFat=(pts,dens,size,fade=0)=>{const c=new THREE.CatmullRomCurve3(pts),n=Math.round(c.getLength()*dens);for(let i=0;i<n;i++){const u=i/n;fat.push([c.getPointAt(u),size*(1-fade*u)]);}};
+  const vessel=(pts,r,m,fd,fs,ff)=>{ventricle.add(tube(pts,r,m,48));if(fd)addFat(pts,fd,fs,ff);};
+  const lad=along(antAz,0.78,-0.93,24);vessel(lad,.032,cor,48,.06,.85);              // 좌전하행지
+  [0.45,0.1,-0.3].forEach(y0=>vessel(along(y=>antAz(y0)+(y0-y)*1.6,y0,y0-0.5,10),.019,cor,30,.04,.9)); // 대각지
+  vessel(ring(yAV,antAz(0.78)+0.05,2.4),.028,cor);                                  // 좌회선지
+  [1.0,1.7].forEach(a=>vessel(along(y=>a+(yAV-y)*0.15,yAV,0.0,10),.02,cor,22,.04,.9)); // 둔각변연지
+  vessel(ring(yAV,antAz(0.78)-0.15,postAz-2*Math.PI),.03,cor);                      // 우관상동맥
+  vessel(along(()=>-1.5,yAV,-0.35,10),.02,cor,26,.04,.9);                          // 예각변연지
+  vessel(along(()=>postAz,yAV,-0.8,14),.025,cor,34,.05,.8);                         // 후하행지
+  vessel(along(y=>antAz(y)+0.08,0.7,-0.8,20),.018,cvn);                             // 전심실사이정맥
+  vessel(ring(0.72,antAz(0.72)+0.09,2.6),.022,cvn);                                 // 대심장정맥
+  vessel(along(()=>postAz+0.09,0.7,-0.8,14),.018,cvn);                              // 중심장정맥
+  addFat(ring(0.8,-3.3,2.95,40),90,.08);                                           // 방실고랑 지방
+  const fm=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1,2),mat(0xd9b45e,{map:atrTex,bumpMap:atrTex,bumpScale:.02,roughness:.36,clearcoat:.85,sheen:.6,sheenColor:0xfff0c0}),fat.length);
+  const d=new THREE.Object3D();
+  fat.forEach(([pt,s],i)=>{const r=k=>rand(i*7+k);d.position.copy(pt).multiplyScalar(0.992).add(V(r(1)-.5,r(2)-.5,r(3)-.5).multiplyScalar(s*.6));
+    d.rotation.set(r(4)*6,r(5)*6,r(6)*6);d.scale.set(s*(1.1+.6*r(7)),s*(.7+.4*r(8)),s*(1.1+.6*r(9)));d.updateMatrix();fm.setMatrixAt(i,d.matrix);});
+  surfMats.push(fm.material);ventricle.add(fm);
+}
+// 심방 (울퉁불퉁한 벽 + 주름진 심방귀)
 const atria=new THREE.Group();heart.add(atria);
-const raMat=mat(0xb8574f),laMat=mat(0xd2665c);
-const RA=new THREE.Mesh(new THREE.SphereGeometry(0.62,48,32),raMat);RA.scale.set(1,0.95,0.9);RA.position.set(-0.95,0.72,0.15);atria.add(RA);
+const raMat=mat(0x7e2c2a,{map:atrTex,bumpMap:atrTex,bumpScale:.03}),laMat=mat(0x8d3530,{map:atrTex,bumpMap:atrTex,bumpScale:.03});
+const blob=(r,amp,s)=>shape(new THREE.SphereGeometry(r,64,48),v=>{v.multiplyScalar(1+amp*nz(v.x*s+1.3,v.y*s,v.z*s-0.7));});
+const RA=new THREE.Mesh(blob(0.62,0.06,2.2),raMat);RA.scale.set(1,0.95,0.9);RA.position.set(-0.95,0.72,0.15);atria.add(RA);
 const LAc=V(0.3,0.95,-0.55);
-const LA=new THREE.Mesh(new THREE.SphereGeometry(0.66,48,32),laMat);LA.scale.set(1.15,0.85,0.9);LA.position.copy(LAc);atria.add(LA);
-// 대혈관
-const venMat=mat(0x4f6fb3),artMat=mat(0xd2433a),paMat=mat(0x7a63a8);
+const LA=new THREE.Mesh(blob(0.66,0.05,2.0),laMat);LA.scale.set(1.15,0.85,0.9);LA.position.copy(LAc);atria.add(LA);
+function auricle(len,wid,sd){return shape(new THREE.SphereGeometry(1,64,40),v=>{
+  const u=(v.x+1)/2,ang=Math.atan2(v.y,v.z);
+  const taper=Math.pow(Math.sin(Math.PI*(0.08+u*0.85)),0.6)*(1-0.3*u);
+  const crimp=1+0.14*Math.sin(ang*6+u*9+sd)*Math.sqrt(u)+0.07*Math.sin(u*30+sd);
+  v.set(v.x*len,v.y*wid*0.5*taper*crimp,v.z*wid*taper*crimp);
+});}
+const rAur=new THREE.Mesh(auricle(0.4,0.44,1),raMat);rAur.position.set(-0.5,1.0,0.6);rAur.rotation.set(0.3,-0.35,-0.15);atria.add(rAur);
+const lAur=new THREE.Mesh(auricle(0.42,0.36,4),laMat);lAur.position.set(0.82,0.85,0.22);lAur.rotation.set(0.2,-2.14,0.1);atria.add(lAur);
+// 대혈관 (교육용 색 구분 유지: 동맥 빨강 · 정맥 파랑 · 폐동맥 보라)
+const gvOpt={map:vesTex,bumpMap:vesTex,bumpScale:.012,roughness:.32,clearcoat:.9};
+const venMat=mat(0x3f5a96,gvOpt),artMat=mat(0xb8423a,gvOpt),paMat=mat(0x66549a,gvOpt);
 heart.add(tube([V(-1.0,-3.6,0.15),V(-1.0,-1.6,0.15),V(-0.98,0.2,0.15)],0.2,venMat)); // 하대정맥
 heart.add(tube([V(-0.95,1.2,0.12),V(-0.98,2.0,0.1),V(-1.0,2.7,0.05)],0.19,venMat)); // 상대정맥
 heart.add(tube([V(0.1,0.55,0.2),V(0.1,1.6,0.3),V(0.45,2.25,0.1),V(1.05,2.15,-0.3),V(1.25,1.4,-0.6),V(1.3,0.2,-0.8)],0.24,artMat,96)); // 대동맥
+[[0.32,2.22,0.16,0.085,-0.15],[0.62,2.3,0.0,0.07,0],[0.88,2.24,-0.16,0.072,0.15]].forEach(([x,y,z,r,dx])=> // 대동맥궁 가지 3개
+  heart.add(tube([V(x,y-0.15,z),V(x+dx*.5,y+0.35,z),V(x+dx,y+0.85,z-0.05)],r,artMat,24)));
 heart.add(tube([V(-0.25,0.45,0.75),V(-0.15,1.35,0.7),V(0.25,1.8,0.35),V(0.75,1.85,0.0)],0.2,paMat)); // 폐동맥
+heart.add(tube([V(0.3,1.82,0.25),V(-0.15,1.78,-0.25),V(-0.7,1.7,-0.45)],0.14,paMat,32)); // 우폐동맥
 // 폐정맥 4개
 const pvDirs=[V(0.85,0.35,-0.4),V(0.9,-0.15,-0.4),V(-0.6,0.35,-0.75),V(-0.55,-0.15,-0.8)].map(v=>v.normalize());
-const pvMat=mat(0xe08a7e);
+const pvMat=mat(0xa14a44,gvOpt);
 const ostia=[];
 pvDirs.forEach(d=>{
   const o=LAc.clone().add(d.clone().multiply(V(0.72,0.56,0.6)));ostia.push(o);
@@ -294,6 +379,14 @@ function beatPhase(t){
   let last=0;for(const b of AF){if(b<=t)last=b;else break;}return t-last;
 }
 function pulse(dt){return Math.exp(-Math.pow((dt-0.08)/0.06,2));}
+// 심전도와 맞춘 기계적 수축: 심방은 P파, 심실은 QRS 직후
+const per=t=>t<14?0.85:0.95;
+function vDt(t){
+  if(isSinus(t)){const P=per(t);return ((t-0.27)%P+P)%P;}
+  let l=-9;for(const b of AF){if(b+0.12<=t)l=b+0.12;else break;}return t-l;
+}
+const aDt=t=>{const P=per(t);return ((t-0.12)%P+P)%P;};
+const sys=d=>d<0.36?Math.pow(Math.sin(Math.PI*d/0.36),2):0;
 
 // ================= ECG =================
 const ecg=document.getElementById('ecg'),eg=ecg.getContext('2d');
@@ -386,14 +479,14 @@ function renderAt(t){
   // 투명도: 카테터 장면에서 내부가 보이게
   const xr=seg(t,29,32)*(1-seg(t,72,75));
   const op=lerp(1,0.26,xr);
-  muscleMats.forEach(m=>{m.opacity=op;m.depthWrite=op>0.95;});
+  muscleMats.forEach(m=>{m.opacity=op;m.depthWrite=op>0.95;});surfMats.forEach(m=>{m.opacity=lerp(1,0.05,xr);m.visible=m.opacity>0.06;});
   // 박동
   const ph=beatPhase(t);
-  const s=1+0.045*pulse(ph);
-  vGroup.scale.set(s,s*0.99,s);
+  const vs=sys(vDt(t));
+  vGroup.scale.set(1-0.055*vs,1-0.03*vs,1-0.055*vs);vGroup.rotation.y=0.05*vs; // 짜내듯 비틀며 수축
   const af=!isSinus(t);
   if(af){const j=0.012;atria.scale.set(1+j*Math.sin(t*53),1+j*Math.sin(t*47+1),1+j*Math.sin(t*61+2));}
-  else{const a=1+0.04*pulse((ph+0.18)%(t<14?0.85:0.95));atria.scale.set(a,a,a);}
+  else{const a=1-0.05*sys(aDt(t)*1.6);atria.scale.set(a,a,a);}
   // 스파크 (심방세동 구간)
   const sOp=seg(t,15,17)*(1-seg(t,60,65));
   const calm=seg(t,48,62);
@@ -469,7 +562,53 @@ window.renderAt=renderAt;
 const REC=location.search.includes('record');
 if(REC)document.body.classList.add('rec');
 const au=$('narr');
-let T=0,playing=false,last=performance.now();
+let T=0,prevT=0,playing=false,last=performance.now();
+
+// ================= 효과음 (Web Audio 실시간 합성, 내레이션 아래에 작게 깔림) =================
+let AC=null,master=null,amb=null,noiseBuf=null,sfxOn=true;
+function initAudio(){
+  if(AC){AC.resume();return;}
+  const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
+  AC=new Ctx();master=AC.createGain();master.gain.value=au.muted?0:0.9;master.connect(AC.destination);
+  noiseBuf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate);
+  const d=noiseBuf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+  // 시술실 공조 소음 (아주 작은 저역 잡음)
+  const src=AC.createBufferSource(),lp=AC.createBiquadFilter();src.buffer=noiseBuf;src.loop=true;
+  lp.type='lowpass';lp.frequency.value=260;amb=AC.createGain();amb.gain.value=0;
+  src.connect(lp).connect(amb).connect(master);src.start();
+}
+function env(g,at,vol,atk,dur){g.gain.setValueAtTime(0.0001,at);g.gain.exponentialRampToValueAtTime(vol,at+atk);g.gain.exponentialRampToValueAtTime(0.0001,at+dur);}
+function noise(at,type,f,q,vol,dur){
+  const n=AC.createBufferSource(),bq=AC.createBiquadFilter(),g=AC.createGain();
+  n.buffer=noiseBuf;bq.type=type;bq.frequency.value=f;bq.Q.value=q;env(g,at,vol,0.008,dur);
+  n.connect(bq).connect(g).connect(master);n.start(at,Math.random());n.stop(at+dur+0.05);
+}
+function tone(at,f,vol,dur,type='sine',f2){
+  const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,at);
+  if(f2)o.frequency.exponentialRampToValueAtTime(f2,at+dur*0.4);
+  env(g,at,vol,0.01,dur);o.connect(g).connect(master);o.start(at);o.stop(at+dur+0.05);
+}
+// 심음: S1(방실판막 닫힘, 낮고 긴 '쿵') · S2(반월판막 닫힘, 짧고 높은 '탁')
+function heartSound(at,vol){
+  tone(at,95,vol,0.17,'sine',48);noise(at,'lowpass',140,0.7,vol*0.6,0.12);
+  tone(at+0.3,120,vol*0.7,0.11,'sine',62);noise(at+0.3,'lowpass',190,0.7,vol*0.45,0.08);
+}
+function sfx(t0,t1){
+  if(!AC||!sfxOn||t1<=t0||t1-t0>0.3)return; // 탐색(점프) 중에는 울리지 않음
+  const now=AC.currentTime,lv=seg(t1,3,5)*(1-seg(t1,93,95));
+  if(vDt(t1)<vDt(t0)){
+    // 심방세동 때는 박동 간격이 불규칙해 소리 크기도 들쭉날쭉
+    heartSound(now,0.5*lv*(isSinus(t1)?1:0.55+0.6*rand(Math.floor(t1*13))));
+    if(t1>12.5&&t1<93.5)tone(now+0.02,isSinus(t1)?880:784,0.035*lv,0.09,'triangle'); // 심전도 모니터 '삑'
+  }
+  // 카테터 진입: 아주 낮게 미끄러지는 소리
+  if(t1>29&&t1<45.5&&Math.floor(t1*2)!==Math.floor(t0*2))noise(now,'bandpass',420,2,0.018,0.5);
+  // 고주파 절제: 지점마다 발생기 신호음 + 짧은 지글거림
+  ablPts.forEach((_,i)=>{const ti=47+(i+0.4)/ablPts.length*16;
+    if(t0<ti&&t1>=ti){tone(now,1046,0.05,0.14);noise(now+0.05,'bandpass',2600,1.4,0.035,0.55);}});
+  // 리듬 회복: 부드러운 차임
+  if(t0<66&&t1>=66)[523,659,784,1046].forEach((f,i)=>tone(now+i*0.11,f,0.06,0.9));
+}
 function setPlaying(p){
   playing=p;$('play').textContent=p?'일시정지':'재생';
   if(p){au.currentTime=T;au.play().catch(()=>{});}else au.pause();
@@ -479,18 +618,22 @@ function loop(now){
   if(playing){
     T=(!au.paused&&au.readyState>1)?au.currentTime:T+dt;
     if(T>=DUR){T=DUR;setPlaying(false);$('start').classList.add('show');$('start').querySelector('b').textContent='다시 보기';}
+    sfx(prevT,T);
   }
+  prevT=T;
+  if(amb)amb.gain.setTargetAtTime(playing&&sfxOn?0.05*seg(T,2,5)*(1-seg(T,94,97)):0,AC.currentTime,0.3);
   renderAt(Math.min(T,DUR-0.001));$('seek').value=T;
   requestAnimationFrame(loop);
 }
 if(!REC)requestAnimationFrame(loop);else renderAt(0);
-$('start').onclick=()=>{$('start').classList.remove('show');if(T>=DUR)T=0;setPlaying(true);};
-$('play').onclick=()=>{$('start').classList.remove('show');setPlaying(!playing);};
+$('start').onclick=()=>{initAudio();$('start').classList.remove('show');if(T>=DUR)T=0;setPlaying(true);};
+$('play').onclick=()=>{initAudio();$('start').classList.remove('show');setPlaying(!playing);};
 const seekTo=v=>{T=clamp(v,0,DUR-0.01);au.currentTime=T;};
 $('seek').oninput=e=>seekTo(+e.target.value);
 const jump=d=>{const i=SCENES.findIndex((s,k)=>T>=s.s&&(k===SCENES.length-1||T<SCENES[k+1].s));const j=clamp(i+d,0,SCENES.length-1);seekTo(SCENES[j].s+0.01);};
 $('prev').onclick=()=>jump(-1);$('next').onclick=()=>jump(1);
-$('mute').onclick=()=>{au.muted=!au.muted;$('mute').textContent=au.muted?'소리 켜기':'소리 끄기';};
+$('mute').onclick=()=>{au.muted=!au.muted;$('mute').textContent=au.muted?'소리 켜기':'소리 끄기';if(master)master.gain.value=au.muted?0:0.9;};
+$('sfx').onclick=()=>{sfxOn=!sfxOn;$('sfx').textContent=sfxOn?'효과음 끄기':'효과음 켜기';};
 document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();$('play').click();}});
 </script>
 </body>
