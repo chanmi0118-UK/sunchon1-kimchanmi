@@ -26,6 +26,10 @@
   th{background:var(--teal-soft);color:var(--navy)}
   .note{background:var(--coral-soft);border-left:4px solid var(--coral);padding:10px 14px;border-radius:4px;font-size:.88rem;margin-top:12px}
   .cap{border-left:4px solid var(--teal);padding:6px 12px;margin:10px 0}
+  .fig{margin:16px 0 28px;overflow-x:auto}
+  .fig svg{display:block;width:100%;min-width:600px;height:auto;background:#fff;border:1px solid var(--line);border-radius:8px}
+  .fig .bar:hover{opacity:.85}
+  .fn{font-size:.8rem;color:var(--muted);margin:6px 0 0}
   footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding:20px 0 40px}
   footer ul{padding-left:18px}
 </style>
@@ -118,8 +122,57 @@
 
   <section>
     <h2>캡션 예시</h2>
-    <p class="cap"><strong>[그림 1] 시술 과정 5단계 일러스트</strong> — 준비부터 회복까지 흐름 한눈에 확인 가능. 시술 전 1회 시청 권장.</p>
-    <p class="cap"><strong>[그림 2] 교육 소요시간 비교 막대그래프</strong> — 구두 설명 15분 이상 대비 단축 효과 확인됨. 병동 도입 검토 필요.</p>
+    <figure class="fig">
+      <svg viewBox="0 0 900 230" role="img" aria-label="시술 과정 5단계: 시술 전 준비, 마취, 카테터 삽입, 폐정맥 절제, 시술 후 회복">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1a9c9c"/></marker></defs>
+        <g stroke="#1a9c9c" stroke-width="2.5" marker-end="url(#ah)">
+          <line x1="148" y1="85" x2="210" y2="85"/><line x1="328" y1="85" x2="390" y2="85"/><line x1="508" y1="85" x2="570" y2="85"/><line x1="688" y1="85" x2="750" y2="85"/>
+        </g>
+        <g fill="#e6f5f4" stroke="#12355b" stroke-width="2">
+          <circle cx="90" cy="85" r="52"/><circle cx="270" cy="85" r="52"/><circle cx="450" cy="85" r="52"/><circle cx="630" cy="85" r="52"/><circle cx="810" cy="85" r="52"/>
+        </g>
+        <g fill="none" stroke="#12355b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <!-- 1 준비: 체크리스트 -->
+          <rect x="70" y="58" width="40" height="52" rx="4" fill="#fff"/><rect x="80" y="53" width="20" height="9" rx="2" fill="#12355b"/>
+          <path d="M78 75l4 4 7-8M78 93l4 4 7-8"/><path d="M93 76h10M93 94h10"/>
+          <!-- 2 마취: 주사기 -->
+          <g transform="rotate(-45 270 85)"><rect x="252" y="76" width="34" height="18" rx="3" fill="#fff"/><path d="M286 85h16M246 85h6M244 76v18M260 76v18"/></g>
+          <!-- 3 카테터 삽입: 다리 혈관 → 심장 -->
+          <path d="M430 125c0-30 10-40 20-55s5-25 0-30" stroke="#e8655a" stroke-width="5"/>
+          <path d="M430 125c0-30 10-40 20-55s5-25 0-30" stroke="#12355b" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <circle cx="450" cy="40" r="4" fill="#12355b"/>
+          <!-- 4 폐정맥 절제: 심장 + 에너지 표시 -->
+          <path d="M630 118c-26-18-34-32-34-44a17 17 0 0 1 34-6a17 17 0 0 1 34 6c0 12-8 26-34 44z" fill="#fdeeed" stroke="#e8655a"/>
+          <path d="M628 70l-6 14h10l-6 14" stroke="#12355b"/>
+          <!-- 5 회복: 침대 -->
+          <path d="M775 110V68M775 98h70v12"/><rect x="782" y="82" width="16" height="10" rx="3" fill="#fff"/><rect x="800" y="84" width="45" height="14" rx="3" fill="#fff"/>
+        </g>
+        <g font-family="Noto Sans KR,sans-serif" text-anchor="middle" fill="#22303d">
+          <g font-size="17" font-weight="700" fill="#12355b"><text x="90" y="170">① 시술 전 준비</text><text x="270" y="170">② 마취</text><text x="450" y="170">③ 카테터 삽입</text><text x="630" y="170">④ 폐정맥 절제</text><text x="810" y="170">⑤ 시술 후 회복</text></g>
+          <g font-size="14" fill="#5f7183"><text x="90" y="194">금식·복약·준비물</text><text x="270" y="194">국소/진정 마취</text><text x="450" y="194">다리 혈관 → 좌심방</text><text x="630" y="194">폐정맥 주위 절제</text><text x="810" y="194">침상안정·지혈</text></g>
+        </g>
+      </svg>
+      <figcaption class="cap"><strong>[그림 1] 시술 과정 5단계 일러스트</strong> — 준비부터 회복까지 흐름 한눈에 확인 가능. 시술 전 1회 시청 권장.</figcaption>
+    </figure>
+
+    <figure class="fig">
+      <svg viewBox="0 0 900 210" role="img" aria-label="교육 소요시간 비교: 구두 설명 15분 이상, 영상 교육 약 5분(가정)">
+        <g font-family="Noto Sans KR,sans-serif" font-size="13" fill="#5f7183" text-anchor="middle">
+          <g stroke="#dbe5ee"><line x1="170" y1="20" x2="170" y2="160"/><line x1="403" y1="20" x2="403" y2="160"/><line x1="637" y1="20" x2="637" y2="160"/><line x1="870" y1="20" x2="870" y2="160"/></g>
+          <text x="170" y="182">0분</text><text x="403" y="182">5분</text><text x="637" y="182">10분</text><text x="870" y="182">15분</text>
+        </g>
+        <g font-family="Noto Sans KR,sans-serif" font-size="15" fill="#22303d" text-anchor="end">
+          <text x="155" y="65">구두 설명(현행)</text><text x="155" y="130">3D 영상 교육</text>
+        </g>
+        <path class="bar" d="M170 42h696a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4h-696z" fill="#12355b"><title>구두 설명(현행): 15분 이상 / 환자 1인</title></path>
+        <path class="bar" d="M170 107h229a4 4 0 0 1 4 4v28a4 4 0 0 1-4 4h-229z" fill="#1a9c9c"><title>3D 영상 교육: 약 5분(가정) / 환자 1인</title></path>
+        <g font-family="Noto Sans KR,sans-serif" font-size="15" font-weight="700" fill="#22303d">
+          <text x="855" y="65" text-anchor="end" fill="#fff">15분 이상</text><text x="413" y="130">약 5분 (가정)</text>
+        </g>
+      </svg>
+      <p class="fn">※ 영상 교육 5분: 영상 구성 총 길이(R-1) 기준 추정치(가정). 도입 후 실측값으로 교체 필요.</p>
+      <figcaption class="cap"><strong>[그림 2] 교육 소요시간 비교 막대그래프</strong> — 구두 설명 15분 이상 대비 단축 효과 확인됨. 병동 도입 검토 필요.</figcaption>
+    </figure>
   </section>
 
   <footer>
