@@ -40,6 +40,17 @@
   .flow b{display:inline-block;background:var(--teal);color:#fff;width:22px;height:22px;line-height:22px;text-align:center;border-radius:50%;margin-right:6px;font-size:.8rem}
   .flow small{display:block;color:var(--muted);font-weight:400;margin-top:4px}
   @media(max-width:640px){.flow{grid-template-columns:1fr 1fr}}
+  .flow{grid-template-columns:repeat(5,1fr)}
+  section.box{background:var(--teal-soft);border-color:#bfe3e0}
+  section.box h2{font-size:1.05rem;margin-bottom:6px}
+  .note.good{background:var(--teal-soft);border-left-color:var(--teal)}
+  .formula{background:#fff;border:1px dashed var(--teal);border-radius:6px;padding:10px 14px;font-weight:700;color:var(--navy);font-size:.92rem}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:8px 0 14px}
+  .cards div{border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:.9rem}
+  .cards h4{margin:0 0 4px;color:var(--navy);font-size:.95rem}
+  .kv td:first-child{white-space:nowrap}
+  .tagline{display:block;margin-top:10px;font-size:.88rem;opacity:.9}
+  @media(max-width:640px){.flow{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -52,16 +63,34 @@
       <li>용어 표준: 심방세동(Atrial Fibrillation, AF) · 전극도자절제술(Radiofrequency Catheter Ablation, RFCA) — 이하 AF, RFCA로 통일</li>
     </ul>
     <span class="slogan">"보고 이해하면, 덜 두렵습니다"</span>
+    <span class="tagline">핵심 방향: 근거를 그대로 적용하지 않고, 파일럿으로 확인한 뒤 확대</span>
   </div>
 </header>
 
 <main class="wrap">
+  <section class="box">
+    <h2>기획안 한눈에 보기</h2>
+    <ul>
+      <li><strong>대상:</strong> RFCA 예정 고령 환자(70대 중심) 및 보호자</li>
+      <li><strong>문제:</strong> 시술 과정 불확실성·정보 부족, 반복 구두 설명으로 인한 불안 및 교육 편차</li>
+      <li><strong>해결:</strong> 약 5분 3D 영상 + 이해도 확인 3문항 + 필요 시 간호사 보충 설명</li>
+      <li><strong>검증:</strong> 선행 연구 효과 그대로 가정하지 않음, RFCA 환자 대상 소규모 파일럿으로 효과 확인</li>
+      <li><strong>확대:</strong> 효과·이해도·간호시간·비용 확인 후 병동 전체 적용</li>
+    </ul>
+  </section>
+
   <section>
     <h2><span class="tag">S</span>Situation - 현상/요약</h2>
     <ul>
       <li>RFCA 예정 고령 환자의 높은 시술 전 불안 및 정보 이해 부족 확인됨</li>
-      <li>보고 목적: 5분 내외 3D 애니메이션 사전교육 영상 제작 승인 요청</li>
+      <li>보고 목적: 약 5분 3D 사전교육 영상 제작 및 파일럿 후 병동 적용 승인 요청</li>
     </ul>
+    <div class="tbl"><table>
+      <tr><th>항목</th><th>내용</th></tr>
+      <tr><td>주요 문제</td><td>시술·회복 과정 불확실성 → 불안 증가 가능성</td></tr>
+      <tr><td>교육 목표</td><td>시술 전체 흐름과 준비·회복·주의사항을 쉽게 이해, 필요 시 간호사 보충 설명으로 연결</td></tr>
+      <tr><td>제안</td><td>고령자가 반복 시청 가능한 약 5분 3D 교육 영상 제작 및 병동 적용</td></tr>
+    </table></div>
   </section>
 
   <section>
@@ -71,9 +100,19 @@
       <tr><td>교육 대상</td><td>70대 남성, 고혈압(HTN)·고지혈증·당뇨(DM) 동반, AF로 RFCA 예정</td></tr>
       <tr><td>기기 활용</td><td>스마트폰 사용 가능, 기기 조작 미숙</td></tr>
       <tr><td>동행</td><td>시술 시 보호자 동석 필요</td></tr>
-      <tr><td>현행 교육</td><td>간호사 1:1 구두 설명, 환자당 15분 이상 반복</td></tr>
+      <tr><td>현행 교육</td><td>간호사 1:1 구두 설명, 환자당 15분 이상 반복 → 이해도·설명 편차 발생</td></tr>
       <tr><td>기존 영상</td><td>서울아산병원 유튜브, Nucleus Medical Media — 전문용어 과다로 고령층 이해 곤란</td></tr>
     </table></div>
+
+    <h3>선행 연구[1]의 의미와 한계</h3>
+    <div class="tbl"><table>
+      <tr><th>선행 연구 확인 내용</th><th>이번 기획안 해석</th></tr>
+      <tr><td>말레이시아 사립병원 외과 수술 환자 대상 교육 영상 적용</td><td><strong>RFCA 환자 직접 연구 아님 → 동일 효과 확정 불가</strong></td></tr>
+      <tr><td>영상 시청군 불안 점수 11.67 → 8.09점</td><td>영상 교육의 불안 감소 가능성을 보여주는 참고 근거로만 사용</td></tr>
+      <tr><td>정보요구도 6.00 → 3.99점</td><td>정보 부족 해소가 불안 완화에 기여할 가능성의 근거</td></tr>
+      <tr><td>약 15분 영상 사용</td><td>이번 영상은 약 5분 → <strong>효과 크기 별도 검증 필요</strong></td></tr>
+    </table></div>
+    <p class="note">수정 원칙: 선행 연구의 −3.58점·−2.01점은 「이번 영상의 예상 효과」로 확정하지 않음. 「선행 연구 참고 수치」로 표시하고 RFCA 환자 실제 효과는 파일럿으로 확인.</p>
   </section>
 
   <section>
@@ -91,10 +130,11 @@
     <h3>예상 위험 요소 및 대응</h3>
     <div class="tbl"><table>
       <tr><th>위험 요소</th><th>대응</th></tr>
-      <tr><td>근거 연구[1]가 외과 수술 환자 대상, RFCA 환자 직접 근거 아님</td><td>RFCA 환자 대상 시범 적용(파일럿)으로 효과 먼저 확인 <small>(참고: 3. 실행 단계)</small></td></tr>
-      <tr><td>영상 길이 5분, 선행 연구(약 15분)보다 짧음</td><td>파일럿 결과 불안 감소 폭 미달 시 장면 추가·길이 조정</td></tr>
-      <tr><td>의료진 감수 전 영상 사용 시 정보 오류</td><td>전문의 감수 + 내용 타당도 지수(Content Validity Index, CVI) 검증 후 사용 <small>(참고: 6. 내용 관리)</small></td></tr>
-      <tr><td>청력·시력 저하, 기기 조작 미숙 고령자</td><td>큰 자막·느린 말속도·성우 나레이션 필수, 간호사 첫 재생 지원 <small>(참고: 2. 운영 계획)</small></td></tr>
+      <tr><td>근거 연구[1]가 외과 수술 환자 대상, RFCA 환자 직접 근거 아님</td><td>RFCA 환자 대상 파일럿으로 효과 먼저 확인 <small>(참고: 3. 파일럿 검증 계획)</small></td></tr>
+      <tr><td>영상 길이 5분, 선행 연구(약 15분)보다 짧음</td><td>효과 미리 단정하지 않음, 파일럿에서 효과·이해도·시청 완료율 확인 후 길이 조정</td></tr>
+      <tr><td>고령자의 태블릿·QR 단독 사용 어려움</td><td>간호사 첫 재생 지원, 병동 태블릿 이용, 시청 직후 3문항 확인 <small>(참고: 2. 운영 계획)</small></td></tr>
+      <tr><td>지침 변경 시 영상 내용 오류</td><td>공통 내용과 병원별 내용 분리, 금식·침상안정은 카드·자막 모듈로 즉시 수정 <small>(참고: 6. 내용 관리)</small></td></tr>
+      <tr><td>간호시간 절감액 과대평가</td><td>영상 시청시간이 아닌 실제 간호사 직접 설명시간을 도입 전후 측정, 보충 설명 포함 재계산 <small>(참고: 5-1)</small></td></tr>
     </table></div>
   </section>
 
@@ -102,105 +142,141 @@
     <h2><span class="tag">R</span>Recommendation - 제안/계획</h2>
     <h3>1. 영상 구성 (총 약 5분)</h3>
     <div class="tbl"><table>
-      <tr><th>장면</th><th>시간</th><th>내용</th><th>자막 + 성우 나레이션</th></tr>
-      <tr><td>① AF란?</td><td>0:00–0:50</td><td>심장 리듬 이상 3D 표현</td><td>"심장이 불규칙하게 뛰는 병, 심방세동임"</td></tr>
-      <tr><td>② 시술 전 준비</td><td>0:50–1:50</td><td>금식·복약·준비물</td><td>"시술 전날 자정부터 금식 필요"</td></tr>
-      <tr><td>③ 시술 과정(3D)</td><td>1:50–3:20</td><td>마취 → 카테터 삽입 → 좌심방 진입 → 폐정맥 절제</td><td>"다리 혈관으로 가는 관을 넣어 시술함"</td></tr>
-      <tr><td>④ 시술 후 회복</td><td>3:20–4:20</td><td>침상안정·지혈</td><td>"시술 후 다리 움직임 제한 필요"</td></tr>
-      <tr><td>⑤ 주의 증상</td><td>4:20–5:00</td><td>출혈·흉통·호흡곤란 시 연락</td><td>"이상 증상 시 즉시 간호사 호출 필요"</td></tr>
+      <tr><th>장면</th><th>시간</th><th>핵심 내용</th><th>자막 + 성우 나레이션</th><th>제작 원칙</th></tr>
+      <tr><td>① AF란?</td><td>0:00–0:50</td><td>심방세동 개념, 심장 리듬 변화 3D 표현</td><td>"심장이 불규칙하게 뛰는 병, 심방세동임"</td><td>의학용어 최소화, 3D 그림 중심</td></tr>
+      <tr><td>② 시술 전 준비</td><td>0:50–1:50</td><td>금식·복약·준비물</td><td>"병원 안내 시간부터 금식 필요"</td><td><strong>병원 지침 확정 후 최종 문구 삽입</strong></td></tr>
+      <tr><td>③ 시술 과정(3D)</td><td>1:50–3:20</td><td>마취 → 카테터 삽입 → 좌심방 진입 → 폐정맥 절제</td><td>"다리 혈관으로 가는 관을 넣어 시술함"</td><td>방식별(고주파·냉각풍선·펄스장) 차이는 별도 안내</td></tr>
+      <tr><td>④ 시술 후 회복</td><td>3:20–4:20</td><td>지혈·침상안정·회복 관찰</td><td>"안내 시간 동안 다리 움직임 제한 필요"</td><td><strong>병원별 지침에 맞춰 수정 가능하도록 모듈화</strong></td></tr>
+      <tr><td>⑤ 주의 증상</td><td>4:20–5:00</td><td>출혈·흉통·호흡곤란 시 알리기</td><td>"이상 증상 시 참지 말고 즉시 간호사 호출 필요"</td><td>「참지 말고 알리기」 명확 제시</td></tr>
     </table></div>
-    <p class="note">장면 내용 문구는 예시임, 금식 시간·안정 시간 등 세부 지침은 의료진 확인 후 확정 필요</p>
     <ul>
-      <li>5분 구성 이유: 70대 대상자 집중 시간 고려, 핵심 정보 5개(질환·준비·과정·회복·주의 증상)만 압축, 반복 시청 부담 적음</li>
-      <li>영상 구조: 공통 부분(①·③·⑤)과 병원별 부분(②·④의 금식·침상안정 시간) 분리 → 지침 변경 시 병원별 부분만 자막·안내 카드로 교체</li>
+      <li>5분 구성 이유: 핵심 정보 5개 영역 압축, 반복 시청 용이 — 단, 15분 영상과 같은 효과 가정하지 않음</li>
+      <li>제작 원칙: 큰 글씨·높은 가독성·느린 말속도·명확한 성우 나레이션, 한 화면 한 메시지</li>
+      <li>금식 시간·침상안정 시간 등 구체 수치는 담당 의료진 최종 확인 후 입력</li>
     </ul>
 
-    <h3>2. 운영 계획 — 시청 지원 절차</h3>
+    <h3>2. 운영 계획 — 시청 → 이해 확인 → 보충 설명</h3>
     <div class="flow">
-      <div><b>1</b>간호사가 첫 재생 지원<small>버튼 1개 화면</small></div>
-      <div><b>2</b>환자·보호자 시청<small>보호자 미동반 시 간호사실 근처 병동 태블릿</small></div>
-      <div><b>3</b>이해도 체크 3문항<small>시청 직후</small></div>
-      <div><b>4</b>오답 시 1:1 보충 설명<small>간호사</small></div>
+      <div><b>1</b>간호사 첫 재생 지원<small>버튼 1개 화면</small></div>
+      <div><b>2</b>환자·보호자 시청<small>보호자 미동반 시 병동 태블릿</small></div>
+      <div><b>3</b>이해도 3문항<small>시청 직후</small></div>
+      <div><b>4</b>오답 시 보충 설명<small>해당 장면 재시청 + 간호사</small></div>
+      <div><b>5</b>소요시간 기록<small>보충 설명 시간 포함</small></div>
     </div>
-    <ul>
-      <li>시청 방식: 병동 태블릿 및 QR코드, 보호자 동반 시청 권장</li>
-      <li>보충 설명 시간은 간호사 투입시간에 포함해 함께 측정 → 5-1 절감액 보정</li>
-    </ul>
-    <h3>2-1. 이해도 체크 3문항 (시청 직후)</h3>
     <div class="tbl"><table>
-      <tr><th>번호</th><th>문항</th><th>답</th><th>확인 장면</th></tr>
-      <tr><td>1</td><td>시술 전날 자정부터 물과 음식을 먹지 않아야 한다.</td><td>O</td><td>② 시술 전 준비</td></tr>
-      <tr><td>2</td><td>시술 후 안정 시간 동안 시술한 쪽 다리를 움직이지 않아야 한다.</td><td>O</td><td>④ 시술 후 회복</td></tr>
-      <tr><td>3</td><td>시술 후 출혈·가슴 통증·숨참이 생기면?<br>① 참고 기다린다 ② 즉시 간호사를 부른다</td><td>②</td><td>⑤ 주의 증상</td></tr>
-    </table></div>
-    <ul>
-      <li>응답 방식: 큰 글씨·그림 버튼으로 O/X 또는 번호 선택, 보호자 대신 응답 불가</li>
-      <li>판정: 1문항이라도 오답 시 해당 장면 다시 보기 + 간호사 1:1 보충 설명</li>
-      <li>금식·안정 시간 등 문항 내용은 예시임, 병원 지침 확정 후 수정 필요</li>
-    </ul>
-
-    <h3>3. 실행 단계</h3>
-    <div class="tbl"><table>
-      <tr><th>단계</th><th>내용</th><th>다음 단계 조건</th></tr>
-      <tr><td>① 제작·검증</td><td>3D 영상 제작, 심장내과 전문의 감수, CVI 검증</td><td>CVI 기준 충족</td></tr>
-      <tr><td>② 파일럿</td><td>RFCA 환자 소규모 적용, 사전·사후 불안 점수 측정</td><td>불안 점수 유의한 감소</td></tr>
-      <tr><td>③ 효과 판정</td><td>도입 전 환자와 비교(4. 평가 설계 기준)</td><td>판정 기준 충족</td></tr>
-      <tr><td>④ 병동 확대</td><td>전체 RFCA 예정 환자 적용, 연 1회 내용 점검</td><td>—</td></tr>
+      <tr><th>상황</th><th>운영 방법</th></tr>
+      <tr><td>기기 조작 어려움</td><td>간호사 첫 재생 지원, 버튼 1개 구조로 화면 단순화</td></tr>
+      <tr><td>보호자 동반</td><td>환자·보호자 함께 시청 권장</td></tr>
+      <tr><td>보호자 미동반</td><td>간호사실 근처에서 병동 태블릿으로 시청 지원</td></tr>
+      <tr><td>시청 후 이해 부족</td><td>3문항 중 1개라도 오답 시 해당 장면 재시청 + 간호사 짧은 보충 설명</td></tr>
+      <tr><td>시간 측정</td><td>영상 시청시간과 별도로 간호사 실제 보충 설명시간 기록</td></tr>
     </table></div>
 
-    <h3>4. 평가 설계</h3>
+    <h3>2-1. 이해도 확인 3문항 (시청 직후)</h3>
     <div class="tbl"><table>
+      <tr><th>번호</th><th>확인 내용</th><th>정답·판정</th><th>확인 장면</th></tr>
+      <tr><td>1</td><td>시술 전 병원에서 안내한 금식 방법을 알고 있는가?</td><td>병원 확정 지침과 일치 시 정답</td><td>② 시술 전 준비</td></tr>
+      <tr><td>2</td><td>시술 후 회복 과정에서 지켜야 할 사항을 알고 있는가?</td><td>병원 확정 지침과 일치 시 정답</td><td>④ 시술 후 회복</td></tr>
+      <tr><td>3</td><td>시술 후 이상 증상(출혈·가슴 통증·숨참)이 생기면 어떻게 하는가?</td><td>즉시 의료진에게 알림</td><td>⑤ 주의 증상</td></tr>
+    </table></div>
+    <ul>
+      <li>응답 방식: 큰 글씨·그림 버튼으로 선택, 보호자 대신 응답 불가</li>
+      <li>「자정부터 금식」「몇 시간 다리 움직임 제한」 등은 병원 지침 확정 전 정답 문항으로 고정하지 않음</li>
+    </ul>
+
+    <h3>3. 파일럿 검증 계획</h3>
+    <p class="note good">핵심: 「영상이 효과 있을 것」이 아니라 「우리 RFCA 환자에게 실제로 효과 있는지 확인 후 확대」</p>
+    <div class="tbl"><table>
+      <tr><th>단계</th><th>실행</th><th>판정</th></tr>
+      <tr><td>① 사전 측정</td><td>입원 시 불안·정보요구 평가</td><td>기초값 확보</td></tr>
+      <tr><td>② 영상 시청</td><td>약 5분 영상 시청</td><td>시청 완료 여부 기록</td></tr>
+      <tr><td>③ 사후 측정</td><td>시술실 이송 전 동일 척도 재측정 + 이해도 3문항 + 만족도</td><td>변화량 확인</td></tr>
+      <tr><td>④ 기존 교육과 비교</td><td>도입 전 기존 구두 교육 환자군과 비교</td><td>두 군 차이 확인</td></tr>
+      <tr><td>⑤ 운영성 평가</td><td>간호사 설명시간·보충 설명시간·기기 사용 어려움 기록</td><td>실제 업무량 확인</td></tr>
+    </table></div>
+    <h3>3-1. 평가 도구 및 효과 판정 기준</h3>
+    <div class="tbl"><table class="kv">
       <tr><th>항목</th><th>내용</th></tr>
       <tr><td>불안 도구</td><td>수술 전 불안·정보요구 척도(Amsterdam Preoperative Anxiety and Information Scale, APAIS) — [1]과 같은 도구로 결과 비교 가능, 11점 이상 불안 판정</td></tr>
       <tr><td>지식 점수</td><td>영상 내용 기반 자체 문항, 심장내과 전문의 감수</td></tr>
       <tr><td>측정 시점</td><td>사전: 입원 시 / 사후: 시술실 이송 전 — [1]과 동일</td></tr>
       <tr><td>비교군</td><td>도입 전 일정 기간 환자(기존 구두 설명) vs 도입 후 환자 — [1]과 같은 순차 수집 방식</td></tr>
-      <tr><td>기타 지표</td><td>간호사 교육 소요시간(보충 설명 포함), 만족도</td></tr>
-      <tr><td><strong>효과 판정 기준</strong></td><td>사후 불안 점수 비교군보다 통계적으로 낮음(p&lt;.05) / 11점 미만 비율 증가 / 간호사 설명 시간 감소</td></tr>
+      <tr><td><strong>판정 기준</strong></td><td>1차: 시청 전후 불안 점수 변화 / 2차: 기존 교육군 대비 불안 점수 / 3차: 이해도 정답률·시청 완료율 / 4차: 간호사 직접 설명시간 감소 / 5차: 환자·간호사 만족도 및 운영 문제</td></tr>
+    </table></div>
+    <p class="note">p&lt;.05 하나만으로 성공 판단하지 않음. 소규모 파일럿은 평균 변화량·이해도·시청 완료율·실제 간호시간 감소를 함께 보고 확대 여부 결정.</p>
+
+    <h3>4. 실행 로드맵</h3>
+    <div class="tbl"><table>
+      <tr><th>단계</th><th>주요 업무</th><th>완료 기준</th></tr>
+      <tr><td>1. 기획 확정</td><td>대상·핵심 메시지·병원 지침 확인</td><td>의료진 합의</td></tr>
+      <tr><td>2. 콘텐츠 제작</td><td>스토리보드·3D 영상·성우 나레이션 제작</td><td>초안 완성</td></tr>
+      <tr><td>3. 의료 검증</td><td>심장내과 전문의 감수, 내용 타당도 지수(Content Validity Index, CVI) 검토</td><td>배포 승인</td></tr>
+      <tr><td>4. 파일럿</td><td>RFCA 환자 대상 사전·사후 평가</td><td>효과·이해도·운영성 자료 확보</td></tr>
+      <tr><td>5. 개선</td><td>영상 길이·자막·설명 내용 수정</td><td>파일럿 문제 해결</td></tr>
+      <tr><td>6. 확대</td><td>병동 전체 적용</td><td>표준 교육 절차로 정착</td></tr>
+      <tr><td>7. 유지관리</td><td>연 1회 및 지침 변경 시 점검</td><td>최신 버전 유지</td></tr>
     </table></div>
 
     <h3>5. 기대효과</h3>
-    <p class="muted-lead">선행 연구[1] 결과 기준. 영상 1편이 ① 환자 불안 감소, ② 정보요구 충족, ③ 간호사 1:1 설명 시간 대체를 동시에 달성하는 구조임.</p>
+    <div class="cards">
+      <div><h4>환자 측면</h4>시술 과정 사전 시각화, 반복 시청으로 불확실성 감소</div>
+      <div><h4>교육 측면</h4>간호사별 설명 편차 감소, 핵심 내용 표준화</div>
+      <div><h4>업무 측면</h4>단순 반복 설명 일부 대체, 이해 부족 환자에게 간호 집중</div>
+      <div><h4>관리 측면</h4>이해도·불안·간호시간 수치화로 효과 지속 평가</div>
+    </div>
+    <p class="muted-lead">선행 연구[1] 참고 수치 — 이번 영상의 확정 효과 아님, 파일럿으로 재확인 필요</p>
     <div class="tbl"><table>
-      <tr><th>효과</th><th>근거 수치</th><th>의미</th></tr>
+      <tr><th>효과</th><th>선행 연구 수치</th><th>의미</th></tr>
       <tr><td>① 수술 전 불안 감소 <small>(그림 2)</small></td><td>영상 시청군 11.67 → 8.09점(−3.58점, −30.7%)<br>대조군 9.25 → 9.55점(변화 없음)<br>사후 두 군 차이 p=.014 [1]</td><td>불안 기준(11점) 이상 → 기준 미만으로 하강</td></tr>
       <tr><td>② 정보요구도 감소</td><td>영상 시청군 6.00 → 3.99점(−2.01점, −33.5%)<br>대조군 5.43 → 5.55점<br>사후 두 군 차이 p&lt;.001 [1]</td><td>불안 원인인 정보 부족 해소 → ①의 기전</td></tr>
-      <tr><td>③ 간호사 설명 시간 대체</td><td>구두 상담 간호사 1:1 최소 15분 → 영상 약 15분 환자 자가 시청 [1]</td><td>환자 교육시간은 유지, 간호사 직접 설명 시간만 대체</td></tr>
+      <tr><td>③ 간호사 설명 시간 대체</td><td>구두 상담 간호사 1:1 최소 15분 → 영상 약 15분 환자 자가 시청 [1]</td><td>환자 교육시간 유지, 간호사 직접 설명 시간만 대체</td></tr>
     </table></div>
-    <h3>5-1. 간호사 인건비 절감 추정 (③ 기준)</h3>
+
+    <h3>5-1. 간호시간 절감액</h3>
+    <p class="formula">연간 절감액 = 환자 1인당 실제 감소한 간호사 직접 설명시간 × 간호사 분당 인건비 × 우리 병동 실제 연간 RFCA 건수</p>
+    <ul>
+      <li>측정 항목: 기존 1:1 구두 설명 평균 시간 / 도입 후 영상 지원 + 보충 설명 평균 시간 / 두 시간의 차이</li>
+      <li>연간 건수: 타 기관 수치가 아닌 우리 병동 최근 1년 또는 2~3년 평균 RFCA 건수로 교체</li>
+    </ul>
+    <p class="muted-lead">참고: 최대치 시나리오 (도입 전 산출, 확정 금액 아님)</p>
     <div class="tbl"><table>
       <tr><th>항목</th><th>값</th><th>출처</th></tr>
       <tr><td>간호사 분당 인건비</td><td>약 345원 (연 5,195만 원 ÷ 2,508시간 ÷ 60분)</td><td>[2]</td></tr>
-      <tr><td>환자 1인당 대체 설명시간</td><td>15분</td><td>[1]</td></tr>
-      <tr><td>환자 1인당 절감액</td><td>345원 × 15분 = <strong>5,175원</strong></td><td>계산</td></tr>
-      <tr><td>연간 시술 건수(단일 기관)</td><td>1,345건 (세브란스병원 2025년 심방세동 시술)</td><td>[3]</td></tr>
-      <tr><td><strong>연간 절감액(간호사 1명 설명 기준)</strong></td><td>5,175원 × 1,345건 = <strong>약 696만 원/년</strong></td><td>계산</td></tr>
-      <tr><td>연간 절감액(질의응답 5분 잔존 시)</td><td>345원 × 10분 × 1,345건 = <strong>약 464만 원/년</strong></td><td>계산</td></tr>
-      <tr><td>연간 절감액(간호사 2명 설명 예시)</td><td>약 696만 원 × 2명 = 약 1,392만 원/년</td><td>예시</td></tr>
+      <tr><td>참고 연간 건수</td><td>1,345건 (세브란스병원 2025년 심방세동 시술)</td><td>[3]</td></tr>
+      <tr><td>15분 전부 대체 시(최대치)</td><td>345원 × 15분 × 1,345건 = 약 696만 원/년</td><td>계산</td></tr>
+      <tr><td>질의응답 5분 잔존 시</td><td>345원 × 10분 × 1,345건 = 약 464만 원/년</td><td>계산</td></tr>
+      <tr><td>간호사 2명 설명 예시</td><td>약 696만 원 × 2명 = 약 1,392만 원/년</td><td>예시</td></tr>
     </table></div>
-    <p class="note">절감액 범위: 연 약 464만~696만 원(간호사 1명 기준). 696만 원은 15분 전부 대체 가정의 최대치. 연간 건수는 우리 병동 공개 자료 부재로 세브란스병원 수치[3] 대입, 실제 적용 시 병동 연간 시술 건수로 교체 필요. 선행 연구[1]는 외과 수술 환자 대상, 간호사 시간 절감은 정성적 서술만 존재 → 도입 후 실측 필요.</p>
+    <p class="note">세브란스 1,345건은 우리 병동 공개 건수 부재로 쓴 참고 수치임. 실제 절감액 계산에는 우리 병동 건수와 도입 후 실측 시간 사용.</p>
 
     <h3>5-2. 비용 및 투자 회수 기간</h3>
     <div class="tbl"><table>
-      <tr><th>비용 항목</th><th>금액</th></tr>
-      <tr><td>3D 영상 제작비</td><td>업체 견적 2~3곳 확보 후 기재</td></tr>
-      <tr><td>전문의 감수·CVI 검증</td><td>확인 후 기재</td></tr>
-      <tr><td>태블릿·QR 배포</td><td>의료정보팀 협의 후 기재</td></tr>
-      <tr><td>지침 변경 시 수정·유지</td><td>연 1회 점검 기준 확인 후 기재</td></tr>
-      <tr><td><strong>투자 회수 기간(년)</strong></td><td><strong>총비용 ÷ 연 절감액(약 464만~696만 원)</strong></td></tr>
+      <tr><th>항목</th><th>현재 상태</th><th>보완 방법</th></tr>
+      <tr><td>3D 영상 제작</td><td>업체 견적 미확정</td><td>2~3개 업체 견적 비교</td></tr>
+      <tr><td>전문의 감수·CVI</td><td>비용 미확정</td><td>심장내과 감수 범위와 검증 방법 확정</td></tr>
+      <tr><td>태블릿·QR</td><td>비용 미확정</td><td>기존 병동 장비 활용 가능 여부 확인</td></tr>
+      <tr><td>유지·수정</td><td>연 1회 점검</td><td>지침 변경 시 즉시 수정 비용과 담당자 지정</td></tr>
     </table></div>
+    <p class="formula">투자 회수 기간(년) = 총 초기 제작·도입비 ÷ 연간 실제 절감액</p>
     <ul>
-      <li>비교안: 기존 무료 영상(서울아산병원 유튜브 등) 재활용안과 비용·이해도 비교 필요</li>
-      <li>금액 미환산 효과: 환자 불안 감소, 교육 내용 표준화</li>
+      <li>초기 비용과 실제 절감액 확인 전에는 회수 기간 확정하지 않음</li>
+      <li>비교안: 기존 무료 영상(서울아산병원 유튜브 등) 재활용안과 비용·이해도 비교</li>
     </ul>
 
     <h3>6. 내용 관리 및 필요 협진·요청</h3>
+    <div class="tbl"><table>
+      <tr><th>문제</th><th>관리 방법</th></tr>
+      <tr><td>시술 방식 차이(고주파·냉각풍선·펄스장)</td><td>공통 흐름 중심 설명, 방식별 차이는 짧은 카드·자막으로 보완</td></tr>
+      <tr><td>금식·복약·침상안정 지침 변경</td><td>영상 본편과 분리한 카드·자막 모듈로 관리</td></tr>
+      <tr><td>의료정보 오류</td><td>배포 전 심장내과 전문의 감수 및 CVI 검토 — [1]도 전문가 9명 CVI 0.96으로 검증</td></tr>
+      <tr><td>책임자 부재</td><td>간호팀 내 영상 관리 담당자 지정, 변경 이력 기록</td></tr>
+      <tr><td>정기 점검</td><td>최소 연 1회 + 병원 지침 변경 시 즉시 검토</td></tr>
+    </table></div>
     <ul>
-      <li>심장내과 전문의 내용 감수 및 CVI 검증 요청 — [1]도 전문가 9명 CVI 0.96으로 검증</li>
-      <li>시술 방식(고주파·냉각풍선·펄스장)별 차이: 짧은 설명 자막으로 처리, 공통 범위는 전문의 확인 필요</li>
-      <li>간호팀 내 영상 관리 담당자 지정, 연 1회 및 지침 변경 시 수정</li>
-      <li>의료정보팀 QR·태블릿 배포 협조 요청</li>
+      <li>협진 요청: 심장내과 전문의 내용 감수·CVI 검증, 의료정보팀 QR·태블릿 배포 협조</li>
     </ul>
+
+    <p class="note good"><strong>최종 제안:</strong> 선행 연구 효과를 그대로 적용하는 사업이 아닌, 고령 RFCA 환자용 3D 사전교육 영상 개발 → 소규모 파일럿으로 불안 감소·이해도·간호시간 절감 확인 → 병동 전체 확대의 단계적 교육개선 사업임.</p>
   </section>
 
   <section>
@@ -282,6 +358,7 @@
       </li>
       <li>서울아산병원 유튜브 교육 영상 / Nucleus Medical Media — 기존 영상 비교</li>
     </ol>
+    <p class="fn">※ 기획·심사용 예시안임. 실제 환자 교육의 금식·복약·침상안정·이상 증상 내용은 해당 기관 최신 진료지침과 담당 의료진 최종 확인 후 배포 필요.</p>
   </footer>
 </main>
 </body>
