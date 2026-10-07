@@ -31,7 +31,10 @@
   .fig .bar:hover{opacity:.85}
   .fn{font-size:.8rem;color:var(--muted);margin:6px 0 0}
   footer{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding:20px 0 40px}
-  footer ul{padding-left:18px}
+  footer ul,footer ol{padding-left:18px}
+  footer ol>li{margin-bottom:6px}
+  .muted-lead{color:var(--muted);font-size:.9rem;margin:0 0 8px}
+  td small{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -108,11 +111,24 @@
     <h3>3. 평가 지표</h3>
     <ul><li>불안척도, 지식 점수, 교육 소요시간, 만족도</li></ul>
     <h3>4. 기대효과</h3>
-    <ul>
-      <li>정보요구도 감소: 6.00 → 3.99 (선행 연구 영상 시청군 사전→사후, 10점 척도 / 대조군 5.43 → 5.55, 사후 두 군 차이 p&lt;.001)</li>
-      <li>인건비 절감 추정: 345원/분 × 15분 × 1,345건 × 간호사 2명(예시) = 약 1,392만원/년 (단일 기관 연간 심방세동 시술 건수 기준, 환자 1인당 간호사 2명이 각 15분 설명한다고 가정한 예시, 영상이 간호사 설명 15분 전체를 대체한다는 가정 — 도입 후 실측 필요)</li>
-      <li>교육 내용 표준화, 반복 설명 업무 감소</li>
-    </ul>
+    <p class="muted-lead">선행 연구[1] 결과 기준. 영상 1편이 ① 환자 불안 감소, ② 정보요구 충족, ③ 간호사 1:1 설명 시간 대체를 동시에 달성하는 구조임.</p>
+    <div class="tbl"><table>
+      <tr><th>효과</th><th>근거 수치</th><th>의미</th></tr>
+      <tr><td>① 수술 전 불안 감소 <small>(그림 2)</small></td><td>영상 시청군 11.67 → 8.09점(−3.58점, −30.7%)<br>대조군 9.25 → 9.55점(변화 없음)<br>사후 두 군 차이 p=.014 [1]</td><td>불안 기준(11점) 이상 → 기준 미만으로 하강</td></tr>
+      <tr><td>② 정보요구도 감소</td><td>영상 시청군 6.00 → 3.99점(−2.01점, −33.5%)<br>대조군 5.43 → 5.55점<br>사후 두 군 차이 p&lt;.001 [1]</td><td>불안 원인인 정보 부족 해소 → ①의 기전</td></tr>
+      <tr><td>③ 간호사 설명 시간 대체</td><td>구두 상담 간호사 1:1 최소 15분 → 영상 약 15분 환자 자가 시청 [1]</td><td>환자 교육시간은 유지, 간호사 직접 설명 시간만 대체</td></tr>
+    </table></div>
+    <h3>4-1. 간호사 인건비 절감 추정 (③ 기준)</h3>
+    <div class="tbl"><table>
+      <tr><th>항목</th><th>값</th><th>출처</th></tr>
+      <tr><td>간호사 분당 인건비</td><td>약 345원 (연 5,195만 원 ÷ 2,508시간 ÷ 60분)</td><td>[2]</td></tr>
+      <tr><td>환자 1인당 대체 설명시간</td><td>15분</td><td>[1]</td></tr>
+      <tr><td>환자 1인당 절감액</td><td>345원 × 15분 = <strong>5,175원</strong></td><td>계산</td></tr>
+      <tr><td>연간 시술 건수(단일 기관)</td><td>1,345건 (세브란스병원 2025년 심방세동 시술)</td><td>[3]</td></tr>
+      <tr><td><strong>연간 절감액(간호사 1명 설명 기준)</strong></td><td>5,175원 × 1,345건 = <strong>약 696만 원/년</strong></td><td>계산</td></tr>
+      <tr><td>연간 절감액(간호사 2명 설명 예시)</td><td>약 696만 원 × 2명 = 약 1,392만 원/년</td><td>예시</td></tr>
+    </table></div>
+    <p class="note">최대 절감액 기준 추정임. 선행 연구[1]는 간호사 시간 절감을 정성적으로만 서술, 영상 시청 후 질의응답 시간 미측정. 대상도 외과 수술 환자로 RFCA 환자와 상이함. 도입 후 간호사 실제 투입시간·불안 점수 실측 필요.</p>
     <h3>5. 필요 협진·요청</h3>
     <ul>
       <li>심장내과 전문의 내용 감수 요청</li>
@@ -180,25 +196,25 @@
         </g>
       </svg>
       <p class="fn">※ APAIS 불안 점수(4~20점, 11점 이상 = 수술 전 불안). 사후 두 군 차이 p=.014(독립 t검정). 출처: Hwee 외(2021) Table 7. 외과 수술 환자 대상 결과로 RFCA 환자 적용 시 재검증 필요.</p>
-      <figcaption class="cap"><strong>[그림 2] 영상 시청 전후 수술 전 불안 점수 비교 막대그래프</strong> — 영상 시청군 불안 점수 11.67 → 8.09점 감소, 대조군 변화 없음(9.25 → 9.55). 병동 도입 검토 필요.</figcaption>
+      <figcaption class="cap"><strong>[그림 2] 영상 시청 전후 수술 전 불안 점수 비교 막대그래프</strong> — 영상 시청군 불안 점수 11.67 → 8.09점 감소, 대조군 변화 없음(9.25 → 9.55). 기대효과 ①·② 근거. 병동 도입 검토 필요.</figcaption>
     </figure>
   </section>
 
   <footer>
     <strong>출처</strong>
-    <ul>
-      <li>서울아산병원 유튜브 교육 영상 / Nucleus Medical Media (기존 영상 비교)</li>
-      <li>불안 점수 11.67 → 8.09(그림 2), 정보요구도 6.00 → 3.99, 교육시간 15분(구두 상담)·약 15분(영상): Hwee LS, Ahmad A, Yusuf P, Kunjukunju A. The Effects of Educational Video on Preoperative Anxiety Level among Surgical Patients of a Private Hospital. <i>Nursing &amp; Primary Care</i>. 2021;5(5):1-7. — 말레이시아 사립병원 외과 수술 환자 152명 대상 유사실험연구, RFCA 환자 대상 아님. <a href="https://www.scivisionpub.com/pdfs/the-effects-of-educational-video-on-preoperative-anxiety-level-among-surgical-patients-of-a-private-hospital-1950.pdf">원문 PDF</a></li>
-      <li>간호사 분당 인건비 약 345원: 2023년 요양기관 근무 간호사 연평균 보수 5,195만 원 기준 산출(5,195만 원 ÷ 연 2,508시간[월 209시간 × 12] ÷ 60분 = 345.2원/분) — 보건복지부, 「제2차 보건의료인력 실태조사」 결과 발표 보도자료, 2026.9.29. 국민건강보험공단 보수월액 기준, 간호사는 상근 여부 구분 없이 산출됨. 365원은 본 자료로 확인 불가, 345원으로 정정. <a href="https://www.mohw.go.kr/board.es?mid=a10503010100&bid=0027&act=view&list_no=1492074">원문</a></li>
-      <li>주요 병원 시술 실적
+    <ol>
+      <li>Hwee LS, Ahmad A, Yusuf P, Kunjukunju A. The Effects of Educational Video on Preoperative Anxiety Level among Surgical Patients of a Private Hospital. <i>Nursing &amp; Primary Care</i>. 2021;5(5):1-7. — 불안 점수(Table 7), 정보요구도(Table 6), 구두 상담 15분·영상 약 15분(3쪽). 말레이시아 사립병원 외과 수술 환자 152명 대상 유사실험연구. <a href="https://www.scivisionpub.com/pdfs/the-effects-of-educational-video-on-preoperative-anxiety-level-among-surgical-patients-of-a-private-hospital-1950.pdf">원문 PDF</a></li>
+      <li>보건복지부. 「제2차 보건의료인력 실태조사」 결과 발표 보도자료. 2026.9.29. — 2023년 요양기관 근무 간호사 연평균 보수 5,195만 원(10쪽, 건강보험 보수월액 기준). 분당 인건비는 월 209시간 기준 환산값(345.2원). <a href="https://www.mohw.go.kr/board.es?mid=a10503010100&amp;bid=0027&amp;act=view&amp;list_no=1492074">원문</a></li>
+      <li>청년의사. 세브란스, 심방세동 시술 1만례 달성. 2026.10.2. — 연간 심방세동 시술 2023년 957건·2024년 975건·2025년 1,345건. <a href="http://www.docdocdoc.co.kr/news/articleView.html?idxno=3043270">기사</a></li>
+      <li>주요 병원 시술 실적(참고)
         <ul>
-          <li>고려대학교 안암병원: 심방세동 전극도자절제술(펄스장절제술 포함) 누적 8,000례 돌파 — <a href="https://kormedi.com/2837610/">코메디닷컴</a></li>
           <li>삼성서울병원: 2025년 연간 부정맥 시술 2,000건 돌파, 누적 2만례, 심방세동 전극도자절제술 성공률 77% — <a href="https://www.k-health.com/news/articleView.html?idxno=90988">헬스경향, 2026.3.26</a> · <a href="https://www.thebionews.net/news/articleView.html?idxno=23101">더바이오뉴스</a></li>
-          <li>세브란스병원: 심방세동 시술 1만례 달성(2026.10.1 기준, 고주파 절제술 7,546건·펄스장 절제술 1,271건·냉각풍선절제술 1,183건), 연간 시술 2023년 957건·2024년 975건·2025년 1,345건 — <a href="http://www.docdocdoc.co.kr/news/articleView.html?idxno=3043270">청년의사, 2026.10.2</a></li>
+          <li>고려대학교 안암병원: 심방세동 전극도자절제술(펄스장절제술 포함) 누적 8,000례 — <a href="https://kormedi.com/2837610/">코메디닷컴</a></li>
           <li>계명대학교 동산병원: 고주파 전극도자절제술 등 부정맥 시술 3,000례 이상 — <a href="https://www.medifonews.com/news/article.html?no=110806">메디포뉴스</a></li>
         </ul>
       </li>
-    </ul>
+      <li>서울아산병원 유튜브 교육 영상 / Nucleus Medical Media — 기존 영상 비교</li>
+    </ol>
   </footer>
 </main>
 </body>
